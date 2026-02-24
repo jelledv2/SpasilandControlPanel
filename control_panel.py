@@ -60,12 +60,11 @@ def do_action(action_name):
             "https://www.netflix.com"
             ])
     elif action_name == "youtube":
-        output = run_command(action_name, [
-            "firefox",
-            "--enable-widevine",
-            "--new-window",
-            "--kiosk",
-            "https://www.youtube.com"
+        output = run_command(action_name, [   
+            "flatpak",
+            "run",
+            "rocks.shy.VacuumTube",
+            "--fullscreen"
             ])
     elif action_name == "spotify":
         output = run_command(action_name, [
@@ -101,8 +100,8 @@ def do_action(action_name):
         output = "onbekende actie"
     return render_template(PAGE, output=output, active=set(running_processes.keys()))
 
-@app.route("/action/youtube", methods=["POST"])
-def handle_youtube_link():
+@app.route("/action/link", methods=["POST"])
+def handle_link():
     url = request.form.get("user_text", "").strip()
     if not url:
         return render_template(PAGE, output="Lege input ontvangen.", active=set(running_processes.keys()))

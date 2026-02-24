@@ -27,15 +27,21 @@
         <form action="{{ url_for('do_action', action_name=name) }}" method="post">
           <button type="submit">Start Youtube</button>
         </form>
-
-        <form action="{{ url_for('handle_youtube_link') }}" method="post">
-          <input type="text" name="user_text" placeholder="Plak YouTube link..." required>
-          <button type="submit">Start Youtube met link</button>
-        </form>
-
         {% if name in active %}
         <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
           <button class="stop" type="submit">Stop Youtube</button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="section">
+        {% set name = 'link' %}
+        <form action="{{ url_for('handle_link') }}" method="post">
+          <input type="text" name="user_text" placeholder="Plak link..." required>
+          <button type="submit">Start link</button>
+        </form>
+        {% if name in active %}
+        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+          <button class="stop" type="submit">Stop Link</button>
         </form>
         {% endif %}
       </div>
