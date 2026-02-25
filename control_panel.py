@@ -8,16 +8,28 @@ PAGE="index.html"
 
 running_processes = {}
 
+import os, subprocess
+
 def run_command(action_name, cmd):
     if action_name in running_processes:
         stop_process_logic(action_name)
 
     env = os.environ.copy()
+
+    uid = os.getuid()
     env["DISPLAY"] = ":0"
+    env["XDG_RUNTIME_DIR"] = f"/run/user/{uid}"
+    env["DBUS_SESSION_BUS_ADDRESS"] = f"unix:path=/run/user/{uid}/bus"
+
+    if "WAYLAND_DISPLAY" not in env and os.path.exists(f"/run/user/{uid}/wayland-0"):
+        env["WAYLAND_DISPLAY"] = "wayland-0"
 
     proc = subprocess.Popen(
         cmd,
-        env=env
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
     )
 
     running_processes[action_name] = proc
@@ -41,7 +53,7 @@ def stop_process_logic(action_name):
 @app.route("/stop/<action_name>", methods=["POST"])
 def stop_process(action_name):
     if not stop_process_logic(action_name):
-        return render_template_string(PAGE, output=f"Proces {action_name} niet actief", active=set(running_processes.keys()))
+        return render_template(PAGE, output=f"Proces {action_name} niet actief", active=set(running_processes.keys()))
 
     return render_template(PAGE, output=f"Gestopt: {action_name}", active=set(running_processes.keys()))
 
