@@ -64,6 +64,8 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium-kiosk",
+            "--profile-directory=Default",
             "https://www.netflix.com"
             ])
     elif action_name == "youtube":
@@ -82,10 +84,12 @@ def do_action(action_name):
             ])
     elif action_name == "vrtmax":
         output = run_command(action_name, [
-            "firefox",
+            "chromium",
             "--enable-widevine",
             "--new-window",
             "--kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium-kiosk",
+            "--profile-directory=Default",
             "https://www.vrt.be/vrtmax/"
             ])
     elif action_name == "play":
@@ -94,6 +98,8 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium-kiosk",
+            "--profile-directory=Default",
             "https://www.play.tv"
             ])
     elif action_name == "off":
