@@ -15,21 +15,11 @@ def run_command(action_name, cmd):
         stop_process_logic(action_name)
 
     env = os.environ.copy()
-
-    uid = os.getuid()
     env["DISPLAY"] = ":0"
-    env["XDG_RUNTIME_DIR"] = f"/run/user/{uid}"
-    env["DBUS_SESSION_BUS_ADDRESS"] = f"unix:path=/run/user/{uid}/bus"
-
-    if "WAYLAND_DISPLAY" not in env and os.path.exists(f"/run/user/{uid}/wayland-0"):
-        env["WAYLAND_DISPLAY"] = "wayland-0"
 
     proc = subprocess.Popen(
         cmd,
-        env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True
+        env=env
     )
 
     running_processes[action_name] = proc
