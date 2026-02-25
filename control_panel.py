@@ -26,6 +26,11 @@ def run_command(action_name, cmd):
     return f"Gestart: {action_name} (PID {proc.pid})"
 
 def stop_process_logic(action_name):
+    if action_name == "youtube":
+        subprocess.run(["flatpak", "kill", "rocks.shy.VacuumTube"])
+        running_processes.pop(action_name, None)
+        return True
+
     proc = running_processes.get(action_name)
     if not proc:
         return False
