@@ -118,6 +118,7 @@ button.stop {
 
 button.stop:hover {
     background-color: #962d22;
+    color: white;
 }
 
 input[type="text"] {
