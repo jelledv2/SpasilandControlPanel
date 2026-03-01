@@ -11,7 +11,7 @@ running_processes = {}
 import os, subprocess
 
 def run_command(action_name, cmd):
-    if action_name in running_processes:
+    if action_name != "link" and action_name in running_processes:
         stop_process_logic(action_name)
 
     env = os.environ.copy()
@@ -119,8 +119,8 @@ def handle_link():
     if not url:
         return render_template(PAGE, output="Lege input ontvangen.", active=set(running_processes.keys()))
 
-    output = run_command("youtube", [
-        "firefox",
+    output = run_command("link", [
+        "chromium",
         "--enable-widevine",
         "--new-window",
         "--kiosk",
