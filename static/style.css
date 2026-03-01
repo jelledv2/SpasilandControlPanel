@@ -81,12 +81,11 @@ body {
     animation: hi 150s linear infinite;
 }
 
-.off-btn-container{
-    margin: 20px;
-    width: fit-content;
-    position: absolute;
-    top: 0;
-    right: 0;
+.off-btn-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
 .container {
