@@ -95,7 +95,8 @@ h1 {
     margin-bottom: 20px;
 }
 
-button {
+button.stop,
+button.start {
     width: 100%;
     padding: 14px;
     margin: 6px 0;
@@ -121,14 +122,37 @@ button.stop:hover {
     color: white;
 }
 
-input[type="text"] {
-    width: 94%;
-    padding: 14px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+.link {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+}
+
+.link input[type="text"] {
+    width: 96%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.link button[type="submit"] {
+    background-color: #272257;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 0px 8px 8px 0px; ;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.link button[type="submit"]:hover {
+    color: black;
+    background-color: #cae9f1;
+    transform: scale(1.05);
 }
 
 .section {

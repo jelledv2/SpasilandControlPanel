@@ -10,32 +10,10 @@
       <h1>Spasiland Control Panel</h1>
 
       <p>Kies een actie:</p>
-
-      <div class="section">
-        {% set name = 'netflix' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button type="submit">Start Netflix</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Netflix</button>
-        </form>
-        {% endif %}
-      </div>
-      <div class="section">
-        {% set name = 'youtube' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button type="submit">Start Youtube</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Youtube</button>
-        </form>
-        {% endif %}
-      </div>
+      
       <div class="section">
         {% set name = 'link' %}
-        <form action="{{ url_for('handle_link') }}" method="post">
+        <form class="link" action="{{ url_for('handle_link') }}" method="post">
           <input type="text" name="user_text" placeholder="Plak link..." required>
           <button type="submit">Start link</button>
         </form>
@@ -46,9 +24,31 @@
         {% endif %}
       </div>
       <div class="section">
+        {% set name = 'netflix' %}
+        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+          <button class="start" type="submit">Start Netflix</button>
+        </form>
+        {% if name in active %}
+        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+          <button class="stop" type="submit">Stop Netflix</button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="section">
+        {% set name = 'youtube' %}
+        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+          <button class="start" type="submit">Start Youtube</button>
+        </form>
+        {% if name in active %}
+        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+          <button class="stop" type="submit">Stop Youtube</button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="section">
         {% set name = 'spotify' %}
         <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button type="submit">Start Spotify</button>
+          <button class="start" type="submit">Start Spotify</button>
         </form>
         {% if name in active %}
         <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
@@ -59,7 +59,7 @@
       <div class="section">
         {% set name = 'vrtmax' %}
         <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button type="submit">Start VRT MAX</button>
+          <button class="start" type="submit">Start VRT MAX</button>
         </form>
         {% if name in active %}
         <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
@@ -70,7 +70,7 @@
       <div class="section">
         {% set name = 'play' %}
         <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button type="submit">Start Play</button>
+          <button class="start" type="submit">Start Play</button>
         </form>
         {% if name in active %}
         <form class="stop" action="{{ url_for('stop_process', action_name=name) }}" method="post">
@@ -79,7 +79,7 @@
         {% endif %}
       </div>   
         <form action="{{ url_for('do_action', action_name='off') }}" method="post">
-          <button type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
+          <button class="start" type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
             Uitschakelen
           </button>
         </form>
