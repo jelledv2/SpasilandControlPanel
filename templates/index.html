@@ -10,7 +10,7 @@
       <h1>Spasiland Control Panel</h1>
 
       <p>Kies een actie:</p>
-      
+
       <div class="section">
         {% set name = 'link' %}
         <form class="link" action="{{ url_for('handle_link') }}" method="post">
@@ -78,11 +78,26 @@
         </form>
         {% endif %}
       </div>   
-        <form action="{{ url_for('do_action', action_name='off') }}" method="post">
-          <button class="start" type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
-            Uitschakelen
-          </button>
-        </form>
-      </div>
+      <form action="{{ url_for('do_action', action_name='off') }}" method="post">
+        <button class="start" type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
+          Uitschakelen
+        </button>
+      </form>
+    </div>
+    {% set name = 'command' %}
+    <div class="command-container">
+      <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+        <div class="command-input-container">
+          <p class="bash-text">
+            <span class="user">jelle</span><span class="vm">@spasiland</span>:<span
+              class="char"
+              >~</span
+            >#
+          </p>
+          <input name="user_command" type="text" placeholder="bash" class="command" />
+        </div>
+        <button type="submit">Enter</button>
+      </form>
+    </div>
   </body>
 </html>

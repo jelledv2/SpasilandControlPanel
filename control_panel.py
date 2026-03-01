@@ -102,6 +102,13 @@ def do_action(action_name):
             "--profile-directory=Default",
             "https://www.play.tv"
             ])
+    elif action_name == "command":
+        user_input = request.form.get("user_command", "").strip()
+        if not user_input:
+            return render_template(PAGE, output="Lege input ontvangen.", active=set(running_processes.keys()))
+        command = user_input.split()
+        output = run_command(action_name, command)
+
     elif action_name == "off":
         output = run_command(action_name, [
             "sudo",

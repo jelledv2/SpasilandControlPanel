@@ -155,6 +155,45 @@ button.stop:hover {
     transform: scale(1.05);
 }
 
+.command-container {
+    max-width: 500px;
+    margin: 40px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.command-input-container {
+    display: flex;
+    align-items: center;
+    background-color: #0f172a;
+    padding: 10px 15px;
+    gap: 5px;
+    border-radius: 8px;
+}
+
+.command-input-container .bash-text {
+    font-size: 0.8rem;
+    color: white;
+}
+
+.command-input-container .bash-text .user {
+    color: #e879f9;
+}
+
+.command-input-container .bash-text .vm {
+    color: #2dd4bf;
+}
+
+.command-input-container .bash-text .char {
+    color: #a78bfa;
+}
+
+.command-input-container input[type="text"].command{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
+
 .section {
     margin-bottom: 20px;
 }
