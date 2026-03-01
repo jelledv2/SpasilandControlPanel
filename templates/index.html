@@ -3,9 +3,17 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Spasiland Control Panel</title>
   </head>
   <body>
+    <div class="off-btn-container">
+      <form action="{{ url_for('do_action', action_name='off') }}" method="post">
+        <button class="off" type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
+          <i class="fa fa-power-off" style="font-size:30px"></i>
+        </button>
+      </form>
+    </div>
     <div class="container">
       <h1>Spasiland Control Panel</h1>
 
@@ -79,11 +87,6 @@
         </form>
         {% endif %}
       </div>   
-      <form action="{{ url_for('do_action', action_name='off') }}" method="post">
-        <button class="start" type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
-          Uitschakelen
-        </button>
-      </form>
     </div>
     {% set name = 'command' %}
     <div class="command-container">
