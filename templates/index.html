@@ -9,8 +9,6 @@
     <div class="container">
       <h1>Spasiland Control Panel</h1>
 
-      <p>Kies een actie:</p>
-
       <div class="section">
         {% set name = 'link' %}
         <form class="link" action="{{ url_for('handle_link') }}" method="post">
@@ -23,6 +21,9 @@
         </form>
         {% endif %}
       </div>
+
+      <p>Kies een actie:</p>
+
       <div class="section">
         {% set name = 'netflix' %}
         <form action="{{ url_for('do_action', action_name=name) }}" method="post">
@@ -96,7 +97,7 @@
           </p>
           <input name="user_command" type="text" placeholder="bash" class="command" />
         </div>
-        <button type="submit">Enter</button>
+        <!-- <button type="submit">Enter</button> -->
       </form>
     </div>
   </body>
