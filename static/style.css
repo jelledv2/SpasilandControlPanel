@@ -26,6 +26,16 @@ body::before {
     top: 20px;
     right: 20px;
     z-index: 1000;
+    border-radius: 12px;
+
+}
+
+.weather-container {
+    position: fixed;
+    width: 350px;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
 }
 
 .main-container {
