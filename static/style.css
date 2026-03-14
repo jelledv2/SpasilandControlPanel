@@ -16,9 +16,9 @@ body::before {
 
   background: linear-gradient(
     to bottom,
-    #cae9f1 0%,
-    #cae9f1 35%,
-    #272257 100%
+    #e2c2ff 0%,
+    #9faf90 45%,
+    #258ea6 100%
   );
 }
 
@@ -67,18 +67,18 @@ button.off  {
     font-size: 25px;
     border-radius: 8px;
     border: none;
-    background-color: #272257;
+    background-color: #258ea6;
     color: white;
     cursor: pointer;
 }
 
 button.off  {
-    border: 3px solid #272257;
+    border: 3px solid #258ea6;
 }
 
 button:hover {
-    background-color: #cae9f1;
-    color: black;
+    background-color: #549f93;
+    color: white;
 }
 
 button.stop {
@@ -106,7 +106,7 @@ button.stop:hover {
 }
 
 .link button[type="submit"] {
-    background-color: #272257;
+    background-color: #258ea6;
     border: none;
     color: white;
     cursor: pointer;
@@ -119,8 +119,8 @@ button.stop:hover {
 }
 
 .link button[type="submit"]:hover {
-    color: black;
-    background-color: #cae9f1;
+    color: white;
+    background-color: #549f93;
     transform: scale(1.05);
 }
 
@@ -158,15 +158,15 @@ button.stop:hover {
 }
 
 .command-input-container .bash-text .user {
-    color: #e879f9;
+    color: #e2b1b1;
 }
 
 .command-input-container .bash-text .vm {
-    color: #2dd4bf;
+    color: #549f93;
 }
 
 .command-input-container .bash-text .char {
-    color: #a78bfa;
+    color: #e2c2ff;
 }
 
 .command-input-container input[type="text"].command{
