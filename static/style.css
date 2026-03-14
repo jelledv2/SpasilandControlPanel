@@ -5,7 +5,11 @@ body {
   min-height: 100%;
   font-family: Arial, sans-serif;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+.top-bar {
+    display: contents;
 }
 
 body::before {
@@ -236,4 +240,85 @@ button.stop:hover {
     border: none;
     outline: none;
     color: white;
+}
+
+@media (max-width: 600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 12px 0;
+        flex-shrink: 0;
+    }
+
+    #clock {
+        display: none;
+        position: static;
+        box-shadow: none;
+        backdrop-filter: none;
+        background: none;
+        padding: 0;
+        font-size: 1.2rem;
+        border-radius: 0;
+    }
+
+    .clock-date {
+        font-size: 0.8rem;
+    }
+
+    .title-container {
+        margin: 0;
+        flex: 1;
+        text-align: left;
+        box-shadow: none;
+        background: none;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+        margin: 0;
+        background: linear-gradient(90deg, #258ea6, #549f93);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .off-btn-container {
+        position: static;
+    }
+
+    button.off {
+        width: auto;
+        padding: 10px 12px;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .main-container {
+        width: 92vw;
+        margin: 12px auto;
+        padding: 20px 16px;
+        border-radius: 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .section {
+        margin-bottom: 0;
+    }
+
+    button.stop,
+    button.start {
+        font-size: 20px;
+        padding: 18px 14px;
+    }
 }

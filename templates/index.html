@@ -2,34 +2,37 @@
 <html lang="nl">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Spasiland Control Panel</title>
   </head>
   <body>
-    <div class="off-btn-container">
-      <button class="off" type="button" onclick="togglePowerMenu(event)">
-        <i class="fa fa-power-off" style="font-size:30px"></i>
-      </button>
-      <div class="power-menu" id="powerMenu">
-        <form action="{{ url_for('do_action', action_name='off') }}" method="post">
-          <button type="submit" class="power-menu-btn">
-            <i class="fa fa-power-off"></i> Uitzetten
-          </button>
-        </form>
-        <form action="{{ url_for('do_action', action_name='restart') }}" method="post">
-          <button type="submit" class="power-menu-btn">
-            <i class="fa fa-refresh"></i> Herstarten
-          </button>
-        </form>
+    <header class="top-bar">
+      <div id="clock"></div>
+
+      <div class="title-container">
+        <h1>Spasiland Control Panel</h1>
       </div>
-    </div>
 
-    <div id="clock"></div>
-
-    <div class="title-container">
-      <h1>Spasiland Control Panel</h1>
-    </div>
+      <div class="off-btn-container">
+        <button class="off" type="button" onclick="togglePowerMenu(event)">
+          <i class="fa fa-power-off" style="font-size:30px"></i>
+        </button>
+        <div class="power-menu" id="powerMenu">
+          <form action="{{ url_for('do_action', action_name='off') }}" method="post">
+            <button type="submit" class="power-menu-btn">
+              <i class="fa fa-power-off"></i> Uitzetten
+            </button>
+          </form>
+          <form action="{{ url_for('do_action', action_name='restart') }}" method="post">
+            <button type="submit" class="power-menu-btn">
+              <i class="fa fa-refresh"></i> Herstarten
+            </button>
+          </form>
+        </div>
+      </div>
+    </header>
 
     <div class="main-container">
       <div class="section">
