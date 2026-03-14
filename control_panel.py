@@ -129,6 +129,11 @@ def do_action(action_name):
             "-h",
             "now"
             ])
+    elif action_name == "restart":
+        output = run_command(action_name, [
+            "sudo",
+            "reboot"
+            ])
     else:
         output = "onbekende actie"
     return render_template(PAGE, output=output, active=set(running_processes.keys()))

@@ -8,11 +8,21 @@
   </head>
   <body>
     <div class="off-btn-container">
-      <form action="{{ url_for('do_action', action_name='off') }}" method="post">
-        <button class="off" type="submit" onclick="return confirm('Weet je zeker dat je Spasiland wilt sluiten?');">
-          <i class="fa fa-power-off" style="font-size:30px"></i>
-        </button>
-      </form>
+      <button class="off" type="button" onclick="togglePowerMenu(event)">
+        <i class="fa fa-power-off" style="font-size:30px"></i>
+      </button>
+      <div class="power-menu" id="powerMenu">
+        <form action="{{ url_for('do_action', action_name='off') }}" method="post">
+          <button type="submit" class="power-menu-btn">
+            <i class="fa fa-power-off"></i> Uitzetten
+          </button>
+        </form>
+        <form action="{{ url_for('do_action', action_name='restart') }}" method="post">
+          <button type="submit" class="power-menu-btn">
+            <i class="fa fa-refresh"></i> Herstarten
+          </button>
+        </form>
+      </div>
     </div>
 
     <div class="title-container">
@@ -107,5 +117,14 @@
         <button type="submit">Enter</button>
       </form>
     </div> -->
+    <script>
+      function togglePowerMenu(e) {
+        e.stopPropagation();
+        document.getElementById('powerMenu').classList.toggle('open');
+      }
+      document.addEventListener('click', function() {
+        document.getElementById('powerMenu').classList.remove('open');
+      });
+    </script>
   </body>
 </html>
