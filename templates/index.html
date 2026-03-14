@@ -85,8 +85,8 @@
           <button class="start" type="submit">Start Play</button>
         </form>
         {% if name in active %}
-        <form class="stop" action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button>Stop Play</button>
+        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+          <button class="stop" type="submit">Stop Play</button>
         </form>
         {% endif %}
       </div>   

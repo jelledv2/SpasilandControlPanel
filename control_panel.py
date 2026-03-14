@@ -25,9 +25,24 @@ def run_command(action_name, cmd):
     running_processes[action_name] = proc
     return f"Gestart: {action_name} (PID {proc.pid})"
 
+CHROMIUM_PROFILE_DIRS = {
+    "netflix":  "/home/jelle/.config/chromium-netflix",
+    "spotify":  "/home/jelle/.config/chromium-spotify",
+    "vrtmax":   "/home/jelle/.config/chromium-vrtmax",
+    "play":     "/home/jelle/.config/chromium-play",
+    "link":     "/home/jelle/.config/chromium-link",
+    "command":  "/home/jelle/.config/chromium-command",
+}
+
 def stop_process_logic(action_name):
     if action_name == "youtube":
         subprocess.run(["flatpak", "kill", "rocks.shy.VacuumTube"])
+        running_processes.pop(action_name, None)
+        return True
+
+    if action_name in CHROMIUM_PROFILE_DIRS:
+        profile_dir = CHROMIUM_PROFILE_DIRS[action_name]
+        subprocess.run(["pkill", "-f", profile_dir])
         running_processes.pop(action_name, None)
         return True
 
@@ -64,8 +79,7 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium",
-            "--profile-directory=Default",
+            "--user-data-dir=/home/jelle/.config/chromium-netflix",
             "https://www.netflix.com"
             ])
     elif action_name == "youtube":
@@ -80,6 +94,7 @@ def do_action(action_name):
             "chromium",
             "--new-window",
             "--kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium-spotify",
             "https://open.spotify.com/"
             ])
     elif action_name == "vrtmax":
@@ -88,8 +103,7 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium",
-            "--profile-directory=Default",
+            "--user-data-dir=/home/jelle/.config/chromium-vrtmax",
             "https://www.vrt.be/vrtmax/"
             ])
     elif action_name == "play":
@@ -98,8 +112,7 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium",
-            "--profile-directory=Default",
+            "--user-data-dir=/home/jelle/.config/chromium-play",
             "https://www.play.tv"
             ])
     elif action_name == "command":
