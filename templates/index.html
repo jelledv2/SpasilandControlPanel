@@ -25,6 +25,8 @@
       </div>
     </div>
 
+    <div id="clock"></div>
+
     <div class="title-container">
       <h1>Spasiland Control Panel</h1>
     </div>
@@ -118,6 +120,25 @@
       </form>
     </div> -->
     <script>
+      function updateClock() {
+        const now = new Date();
+        const time = now.toLocaleTimeString('nl-BE', {
+          timeZone: 'Europe/Brussels',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+        const date = now.toLocaleDateString('nl-BE', {
+          timeZone: 'Europe/Brussels',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+        document.getElementById('clock').innerHTML = `${time}<br><span class="clock-date">${date}</span>`;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
       function togglePowerMenu(e) {
         e.stopPropagation();
         document.getElementById('powerMenu').classList.toggle('open');

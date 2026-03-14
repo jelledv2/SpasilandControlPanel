@@ -96,6 +96,30 @@ h1 {
     margin-bottom: 20px;
 }
 
+#clock {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #258ea6;
+    letter-spacing: 3px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    line-height: 1.4;
+    text-align: center;
+}
+
+.clock-date {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: #549f93;
+}
+
 button.stop,
 button.start,
 button.off  {
