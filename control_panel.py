@@ -64,7 +64,7 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium-kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium",
             "--profile-directory=Default",
             "https://www.netflix.com"
             ])
@@ -88,7 +88,7 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium-kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium",
             "--profile-directory=Default",
             "https://www.vrt.be/vrtmax/"
             ])
@@ -98,7 +98,7 @@ def do_action(action_name):
             "--enable-widevine",
             "--new-window",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium-kiosk",
+            "--user-data-dir=/home/jelle/.config/chromium",
             "--profile-directory=Default",
             "https://www.play.tv"
             ])
