@@ -252,7 +252,7 @@ button.stop:hover {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 12px 0;
+        padding: 12px;
         flex-shrink: 0;
     }
 
@@ -282,7 +282,7 @@ button.stop:hover {
     }
 
     h1 {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         margin: 0;
         background: linear-gradient(90deg, #258ea6, #549f93);
         -webkit-background-clip: text;
@@ -291,7 +291,9 @@ button.stop:hover {
     }
 
     .off-btn-container {
-        position: static;
+        position: relative;
+        left: 5px;
+        top: -3px;
     }
 
     button.off {
