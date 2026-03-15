@@ -100,11 +100,18 @@ h1 {
     margin-bottom: 20px;
 }
 
-#clock {
+.clock-widget-container {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+
+#clock {
     background: rgba(255,255,255,0.92);
     backdrop-filter: blur(14px);
     border-radius: 14px;
@@ -118,6 +125,15 @@ h1 {
     box-shadow: 0 8px 28px rgba(37,142,166,0.18), 0 2px 8px rgba(0,0,0,0.08);
     line-height: 1.3;
     text-align: center;
+}
+
+.ww-informers-box-854753 {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 8px 28px rgba(37,142,166,0.18), 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
 }
 
 .clock-date {
@@ -261,15 +277,8 @@ button.stop:hover {
         flex-shrink: 0;
     }
 
-    #clock {
+    .clock-widget-container {
         display: none;
-        position: static;
-        box-shadow: none;
-        backdrop-filter: none;
-        background: none;
-        padding: 0;
-        font-size: 1.2rem;
-        border-radius: 0;
     }
 
     .clock-date {
