@@ -140,9 +140,15 @@ def do_action(action_name):
 
 @app.route("/action/link", methods=["POST"])
 def handle_link():
-    url = request.form.get("user_text", "").strip()
-    if not url:
+    user_input = request.form.get("user_text", "").strip()
+    if not user_input:
         return render_template(PAGE, output="Lege input ontvangen.", active=set(running_processes.keys()))
+
+    if user_input.startswith("http://") or user_input.startswith("https://"):
+        url = user_input
+    else:
+        import urllib.parse
+        url = "https://www.google.com/search?q=" + urllib.parse.quote_plus(user_input)
 
     output = run_command("link", [
         "chromium",

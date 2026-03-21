@@ -119,8 +119,8 @@
         {% set name = 'link' %}
         <form class="search-form" action="{{ url_for('handle_link') }}" method="post">
           <div class="search-bar">
-            <i class="fa fa-link search-icon"></i>
-            <input type="text" name="user_text" placeholder="Plak een link..." required>
+            <i class="fa fa-search search-icon"></i>
+            <input type="text" name="user_text" placeholder="Zoek of plak een link..." required>
             <button type="submit">Start</button>
           </div>
         </form>
@@ -129,6 +129,18 @@
           <button class="stop search-stop" type="submit">Stop Link</button>
         </form>
         {% endif %}
+
+        <div class="suggestions">
+          <button type="button" class="suggestion" onclick="submitSearch('Cute golden retrievers')">
+            <i class="fa fa-paw"></i> Cute golden retrievers
+          </button>
+          <button type="button" class="suggestion" onclick="submitSearch('Taylor Swift relationship status')">
+            <i class="fa fa-heart"></i> Taylor Swift relationship status
+          </button>
+          <button type="button" class="suggestion" onclick="submitSearch('Jennifer Lawrence latest movies')">
+            <i class="fa fa-film"></i> Jennifer Lawrence latest movies
+          </button>
+        </div>
       </div>
     </div>
 
@@ -174,6 +186,13 @@
       document.addEventListener('click', function() {
         document.getElementById('powerMenu').classList.remove('open');
       });
+
+      function submitSearch(query) {
+        const form = document.querySelector('#screen-search .search-form');
+        const input = form.querySelector('input[name="user_text"]');
+        input.value = query;
+        form.submit();
+      }
 
       function navigateTo(screen, btn) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
