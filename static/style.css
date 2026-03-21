@@ -26,19 +26,78 @@ body::before {
   );
 }
 
-.off-btn-container {
+.sidebar {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 96px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(14px);
+    border-right: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 2px 0 18px rgba(37, 142, 166, 0.10);
+}
+
+.sidebar-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    border: none;
+    background: rgba(255, 255, 255, 0.55);
+    color: #258ea6;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s, color 0.18s, transform 0.12s;
+    box-shadow: 0 2px 8px rgba(37, 142, 166, 0.10);
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-btn:hover {
+    background: #258ea6;
+    color: white;
+    transform: scale(1.08);
+}
+
+.sidebar-btn--power:hover {
+    background: #c0392b;
+    color: white;
+}
+
+.off-btn-container {
+    position: relative;
     display: inline-block;
 }
 
 .power-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
+    bottom: 0;
+    left: calc(100% + 10px);
     background: white;
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.2);
@@ -177,42 +236,79 @@ button.stop:hover {
     color: white;
 }
 
-.link {
-    margin: 6px 0;
-    width: 100%;
-    display: inline-block;
-    position: relative;
+.search-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 20px;
 }
 
-.link input[type="text"] {
-    width: 97%;
-    padding: 10px;
-    border-radius: 8px;
+.search-form {
+    width: min(560px, 92vw);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(37, 142, 166, 0.18), 0 2px 8px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+    padding: 10px 10px 10px 28px;
+    gap: 14px;
+}
+
+.search-icon {
+    color: #258ea6;
+    font-size: 26px;
+    flex-shrink: 0;
+}
+
+.search-bar input[type="text"] {
+    flex: 1;
     border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+    background: transparent;
+    font-size: 24px;
+    color: #333;
+    padding: 14px 0;
 }
 
-.link button[type="submit"] {
-    background-color: #258ea6;
+.search-bar input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+.search-bar button[type="submit"] {
+    background: #258ea6;
     border: none;
     color: white;
     cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 0px 8px 8px 0px; ;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 0;
-    right: 0;
+    padding: 18px 36px;
+    border-radius: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    transition: background 0.18s;
+    width: auto;
+    margin: 0;
 }
 
-.link button[type="submit"]:hover {
+.search-bar button[type="submit"]:hover {
+    background: #549f93;
     color: white;
-    background-color: #549f93;
-    transform: scale(1.05);
+}
+
+.search-stop {
+    width: min(560px, 92vw) !important;
+    border-radius: 12px !important;
 }
 
 .section {
     margin-bottom: 20px;
+}
+
+.section:last-child {
+    margin-bottom: 0;
 }
 
 .output {
@@ -263,16 +359,78 @@ button.stop:hover {
     color: white;
 }
 
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.sidebar-btn.active {
+    background: #258ea6;
+    color: white;
+}
+
+.hamburger-btn {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
 @media (max-width: 600px) {
     body {
         display: flex;
         flex-direction: column;
+        padding-left: 0;
+    }
+
+    .sidebar {
+        left: -96px;
+        transition: left 0.25s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .sidebar-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .hamburger-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.55);
+        color: #258ea6;
+        font-size: 20px;
+        cursor: pointer;
+        flex-shrink: 0;
     }
 
     .top-bar {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        gap: 12px;
         padding: 12px;
         flex-shrink: 0;
     }
@@ -304,19 +462,6 @@ button.stop:hover {
         background-clip: text;
     }
 
-    .off-btn-container {
-        position: relative;
-        right: 5px;
-        top: -3px;
-    }
-
-    button.off {
-        width: auto;
-        padding: 10px 12px;
-        font-size: 16px;
-        margin: 0;
-    }
-
     .main-container {
         width: 92vw;
         margin: 12px auto;
@@ -336,5 +481,43 @@ button.stop:hover {
     button.start {
         font-size: 20px;
         padding: 18px 14px;
+    }
+
+    .search-screen {
+        padding: 20px 16px;
+        gap: 14px;
+    }
+
+    .search-form {
+        width: 100%;
+    }
+
+    .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 16px;
+        padding: 14px 16px;
+        gap: 10px;
+    }
+
+    .search-icon {
+        display: none;
+    }
+
+    .search-bar input[type="text"] {
+        font-size: 18px;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(37, 142, 166, 0.25);
+    }
+
+    .search-bar button[type="submit"] {
+        border-radius: 12px;
+        font-size: 18px;
+        padding: 16px;
+        width: 100%;
+    }
+
+    .search-stop {
+        width: 100% !important;
     }
 }

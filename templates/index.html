@@ -8,25 +8,42 @@
     <title>Spasiland Control Panel</title>
   </head>
   <body>
-    <header class="top-bar">
-      <div class="off-btn-container">
-        <button class="off" type="button" onclick="togglePowerMenu(event)">
-          <i class="fa fa-power-off" style="font-size:30px"></i>
+    <nav class="sidebar">
+      <div class="sidebar-top">
+        <button class="sidebar-btn active" type="button" onclick="navigateTo('home', this)">
+          <i class="fa fa-home"></i>
         </button>
-        <div class="power-menu" id="powerMenu">
-          <form action="{{ url_for('do_action', action_name='off') }}" method="post">
-            <button type="submit" class="power-menu-btn">
-              <i class="fa fa-power-off"></i> Uitzetten
-            </button>
-          </form>
-          <form action="{{ url_for('do_action', action_name='restart') }}" method="post">
-            <button type="submit" class="power-menu-btn">
-              <i class="fa fa-refresh"></i> Herstarten
-            </button>
-          </form>
+        <button class="sidebar-btn" type="button" onclick="navigateTo('search', this)">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="off-btn-container">
+          <button class="sidebar-btn sidebar-btn--power" type="button" onclick="togglePowerMenu(event)">
+            <i class="fa fa-power-off"></i>
+          </button>
+          <div class="power-menu" id="powerMenu">
+            <form action="{{ url_for('do_action', action_name='off') }}" method="post">
+              <button type="submit" class="power-menu-btn">
+                <i class="fa fa-power-off"></i> Uitzetten
+              </button>
+            </form>
+            <form action="{{ url_for('do_action', action_name='restart') }}" method="post">
+              <button type="submit" class="power-menu-btn">
+                <i class="fa fa-refresh"></i> Herstarten
+              </button>
+            </form>
+          </div>
         </div>
       </div>
+    </nav>
 
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <header class="top-bar">
+      <button class="hamburger-btn" type="button" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+      </button>
       <div class="title-container">
         <h1>Spasiland Control Panel</h1>
       </div>
@@ -37,77 +54,82 @@
       </div>
     </header>
 
-    <div class="main-container">
-      <div class="section">
+    <div id="screen-home" class="screen active">
+      <div class="main-container">
+        <div class="section">
+          {% set name = 'netflix' %}
+          <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+            <button class="start" type="submit">Start Netflix</button>
+          </form>
+          {% if name in active %}
+          <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+            <button class="stop" type="submit">Stop Netflix</button>
+          </form>
+          {% endif %}
+        </div>
+        <div class="section">
+          {% set name = 'youtube' %}
+          <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+            <button class="start" type="submit">Start Youtube</button>
+          </form>
+          {% if name in active %}
+          <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+            <button class="stop" type="submit">Stop Youtube</button>
+          </form>
+          {% endif %}
+        </div>
+        <div class="section">
+          {% set name = 'spotify' %}
+          <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+            <button class="start" type="submit">Start Spotify</button>
+          </form>
+          {% if name in active %}
+          <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+            <button class="stop" type="submit">Stop Spotify</button>
+          </form>
+          {% endif %}
+        </div>
+        <div class="section">
+          {% set name = 'vrtmax' %}
+          <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+            <button class="start" type="submit">Start VRT MAX</button>
+          </form>
+          {% if name in active %}
+          <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+            <button class="stop" type="submit">Stop VRT MAX</button>
+          </form>
+          {% endif %}
+        </div>
+        <div class="section">
+          {% set name = 'play' %}
+          <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+            <button class="start" type="submit">Start Play</button>
+          </form>
+          {% if name in active %}
+          <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+            <button class="stop" type="submit">Stop Play</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-search" class="screen">
+      <div class="search-screen">
         {% set name = 'link' %}
-        <form class="link" action="{{ url_for('handle_link') }}" method="post">
-          <input type="text" name="user_text" placeholder="Plak link..." required>
-          <button type="submit">Start link</button>
+        <form class="search-form" action="{{ url_for('handle_link') }}" method="post">
+          <div class="search-bar">
+            <i class="fa fa-link search-icon"></i>
+            <input type="text" name="user_text" placeholder="Plak een link..." required>
+            <button type="submit">Start</button>
+          </div>
         </form>
         {% if name in active %}
         <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Link</button>
+          <button class="stop search-stop" type="submit">Stop Link</button>
         </form>
         {% endif %}
       </div>
-
-      <p>Kies een actie:</p>
-
-      <div class="section">
-        {% set name = 'netflix' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button class="start" type="submit">Start Netflix</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Netflix</button>
-        </form>
-        {% endif %}
-      </div>
-      <div class="section">
-        {% set name = 'youtube' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button class="start" type="submit">Start Youtube</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Youtube</button>
-        </form>
-        {% endif %}
-      </div>
-      <div class="section">
-        {% set name = 'spotify' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button class="start" type="submit">Start Spotify</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Spotify</button>
-        </form>
-        {% endif %}
-      </div>
-      <div class="section">
-        {% set name = 'vrtmax' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button class="start" type="submit">Start VRT MAX</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop VRT MAX</button>
-        </form>
-        {% endif %}
-      </div>
-      <div class="section">
-        {% set name = 'play' %}
-        <form action="{{ url_for('do_action', action_name=name) }}" method="post">
-          <button class="start" type="submit">Start Play</button>
-        </form>
-        {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
-          <button class="stop" type="submit">Stop Play</button>
-        </form>
-        {% endif %}
-      </div>   
     </div>
 
     <!-- {% set name = 'command' %}
@@ -152,6 +174,23 @@
       document.addEventListener('click', function() {
         document.getElementById('powerMenu').classList.remove('open');
       });
+
+      function navigateTo(screen, btn) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + screen).classList.add('active');
+        document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        closeSidebar();
+      }
+
+      function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('open');
+        document.getElementById('sidebarOverlay').classList.toggle('open');
+      }
+      function closeSidebar() {
+        document.querySelector('.sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('open');
+      }
     </script>
   </body>
 </html>
