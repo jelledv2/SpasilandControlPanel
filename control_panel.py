@@ -149,6 +149,7 @@ def handle_link():
         "--enable-widevine",
         "--new-window",
         "--kiosk",
+        "--user-data-dir=/home/jelle/.config/chromium-link",
         url
         ])
 

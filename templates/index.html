@@ -125,7 +125,7 @@
           </div>
         </form>
         {% if name in active %}
-        <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+        <form class="search-form" action="{{ url_for('stop_process', action_name=name) }}" method="post">
           <button class="stop search-stop" type="submit">Stop Link</button>
         </form>
         {% endif %}

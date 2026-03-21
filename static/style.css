@@ -299,7 +299,7 @@ button.stop:hover {
 }
 
 .search-stop {
-    width: min(560px, 92vw) !important;
+    width: 100%;
     border-radius: 12px !important;
 }
 
@@ -517,7 +517,4 @@ button.stop:hover {
         width: 100%;
     }
 
-    .search-stop {
-        width: 100% !important;
-    }
 }
