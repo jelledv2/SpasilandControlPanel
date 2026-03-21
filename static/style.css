@@ -240,12 +240,12 @@ button.stop:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 40px 20px;
+    gap: 28px;
+    padding: 60px 20px;
 }
 
 .search-form {
-    width: min(560px, 92vw);
+    width: min(860px, 92vw);
 }
 
 .search-bar {
@@ -255,13 +255,13 @@ button.stop:hover {
     border-radius: 50px;
     box-shadow: 0 8px 32px rgba(37, 142, 166, 0.18), 0 2px 8px rgba(0,0,0,0.08);
     backdrop-filter: blur(10px);
-    padding: 10px 10px 10px 28px;
-    gap: 14px;
+    padding: 12px 12px 12px 36px;
+    gap: 18px;
 }
 
 .search-icon {
     color: #258ea6;
-    font-size: 26px;
+    font-size: 36px;
     flex-shrink: 0;
 }
 
@@ -270,9 +270,9 @@ button.stop:hover {
     border: none;
     outline: none;
     background: transparent;
-    font-size: 24px;
+    font-size: 36px;
     color: #333;
-    padding: 14px 0;
+    padding: 16px 0;
 }
 
 .search-bar input[type="text"]::placeholder {
@@ -284,9 +284,9 @@ button.stop:hover {
     border: none;
     color: white;
     cursor: pointer;
-    padding: 18px 36px;
+    padding: 22px 48px;
     border-radius: 40px;
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 600;
     transition: background 0.18s;
     width: auto;
@@ -306,23 +306,23 @@ button.stop:hover {
 .suggestions {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: min(560px, 92vw);
+    gap: 14px;
+    width: min(860px, 92vw);
 }
 
 .suggestion {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
     width: 100%;
-    padding: 16px 22px;
+    padding: 22px 32px;
     border-radius: 50px;
     border: none;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 12px rgba(37, 142, 166, 0.10);
     color: #333;
-    font-size: 18px;
+    font-size: 28px;
     cursor: pointer;
     text-align: left;
     transition: background 0.18s, transform 0.12s;
@@ -331,7 +331,7 @@ button.stop:hover {
 
 .suggestion i {
     color: #258ea6;
-    font-size: 18px;
+    font-size: 28px;
     flex-shrink: 0;
 }
 
