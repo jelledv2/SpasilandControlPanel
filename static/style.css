@@ -636,6 +636,20 @@ button.stop:hover {
         font-size: 13px;
     }
 
+    button.search-stop {
+        width: 100%;
+        height: auto;
+        padding: 18px 14px;
+        border-radius: 12px;
+        font-size: 20px;
+        position: static;
+        border-radius: 12px;
+    }
+
+    button.search-stop::before {
+        display: none;
+    }
+
     .search-screen {
         padding: 20px 16px;
         gap: 14px;
