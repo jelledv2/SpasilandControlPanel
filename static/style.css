@@ -498,8 +498,12 @@ button.stop:hover {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 12px;
+        padding: 14px 16px;
         flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
 
     .clock-widget-container {
@@ -513,7 +517,7 @@ button.stop:hover {
     .title-container {
         margin: 0;
         flex: 1;
-        text-align: left;
+        text-align: center;
         box-shadow: none;
         background: none;
         border-radius: 0;
@@ -521,34 +525,63 @@ button.stop:hover {
     }
 
     h1 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+        font-weight: 700;
         margin: 0;
-        background: linear-gradient(90deg, #258ea6, #549f93);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: white;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        -webkit-text-fill-color: white;
+        background: none;
+        letter-spacing: 0.3px;
     }
 
     .main-container {
-        width: 92vw;
-        margin: 12px auto;
-        padding: 20px 16px;
-        border-radius: 20px;
+        width: 100%;
+        margin: 0;
+        padding: 16px;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
+        align-content: start;
+        box-sizing: border-box;
     }
 
     .section {
         margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
-    button.stop,
+    .section form {
+        flex: 1;
+    }
+
     button.start {
-        font-size: 20px;
-        padding: 18px 14px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 32px 10px;
+        border-radius: 20px;
+        margin: 0;
+        text-align: center;
+        background: linear-gradient(145deg, #258ea6 0%, #1a7a91 100%);
+        box-shadow: 0 6px 20px rgba(37, 142, 166, 0.4), 0 1px 0 rgba(255,255,255,0.2) inset;
+        letter-spacing: 0;
+    }
+
+    button.stop {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px 10px;
         border-radius: 12px;
+        margin: 0;
     }
 
     .search-screen {
