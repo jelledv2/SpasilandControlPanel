@@ -97,39 +97,58 @@ body::before {
     display: none;
     position: absolute;
     bottom: 0;
-    left: calc(100% + 10px);
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    left: calc(100% + 16px);
+    background: #1a5f6e;
+    border-radius: 20px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.45);
     overflow: hidden;
-    min-width: 160px;
+    padding: 12px;
+    min-width: 280px;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .power-menu.open {
-    display: block;
+    display: flex;
 }
 
 .power-menu form {
     margin: 0;
 }
 
+.power-menu form:first-child .power-menu-btn {
+    background: #e2b1b1;
+    color: #4a1a1a;
+}
+
+.power-menu form:first-child .power-menu-btn:hover {
+    background: #d49090;
+    color: #3a1010;
+}
+
+.power-menu form:last-child .power-menu-btn {
+    background: #549f93;
+    color: white;
+}
+
+.power-menu form:last-child .power-menu-btn:hover {
+    background: #3d8578;
+    color: white;
+}
+
 .power-menu-btn {
     width: 100%;
-    padding: 12px 18px;
-    font-size: 16px;
+    padding: 22px 28px;
+    font-size: 26px;
+    font-weight: 700;
     border: none;
-    background: white;
-    color: #333;
+    border-radius: 12px;
     cursor: pointer;
     text-align: left;
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-.power-menu-btn:hover {
-    background-color: #549f93 !important;
-    color: white !important;
+    gap: 16px;
+    transition: background 0.15s ease;
 }
 
 .main-container {
