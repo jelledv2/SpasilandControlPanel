@@ -600,9 +600,14 @@ button.stop:hover {
 
     .section {
         margin-bottom: 0;
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
+        position: relative;
+    }
+
+    .section form:last-child:not(:first-child) {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        flex: none;
     }
 
     button.start {
@@ -619,15 +624,16 @@ button.stop:hover {
     }
 
     button.stop {
-        width: auto;
-        padding: 0 16px;
-        border-radius: 16px;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 50%;
         margin: 0;
-        height: 100%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     button.stop::before {
-        font-size: 18px;
+        font-size: 13px;
     }
 
     .search-screen {
