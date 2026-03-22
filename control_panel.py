@@ -168,7 +168,7 @@ def handle_link():
 def get_stats():
     import psutil
 
-    cpu_percent = psutil.cpu_percent(interval=0.5)
+    cpu_percent = psutil.cpu_percent(interval=None)
 
     ram = psutil.virtual_memory()
     ram_used_mb = ram.used // (1024 * 1024)
@@ -192,16 +192,6 @@ def get_stats():
     minutes, seconds = divmod(remainder, 60)
     uptime_str = f"{hours}u {minutes}m {seconds}s"
 
-    processes = []
-    for proc in sorted(psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent"]),
-                       key=lambda p: p.info["cpu_percent"] or 0, reverse=True)[:10]:
-        processes.append({
-            "pid": proc.info["pid"],
-            "name": proc.info["name"],
-            "cpu": round(proc.info["cpu_percent"] or 0, 1),
-            "mem": round(proc.info["memory_percent"] or 0, 1),
-        })
-
     return jsonify(
         cpu_percent=cpu_percent,
         ram_used_mb=ram_used_mb,
@@ -212,7 +202,6 @@ def get_stats():
         disk_percent=disk_percent,
         temp=temp,
         uptime=uptime_str,
-        processes=processes,
     )
 
 

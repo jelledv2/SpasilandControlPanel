@@ -487,28 +487,28 @@ button.stop:hover {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 .stat-card {
     background: rgba(255,255,255,0.82);
     border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 20px;
-    padding: 24px 20px;
+    border-radius: 24px;
+    padding: 36px 32px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 .stat-icon {
-    font-size: 28px;
+    font-size: 36px;
 }
 
 .stat-label {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #666;
     text-transform: uppercase;
@@ -516,19 +516,19 @@ button.stop:hover {
 }
 
 .stat-value {
-    font-size: 32px;
+    font-size: 52px;
     font-weight: 700;
     color: #222;
     line-height: 1;
 }
 
 .stat-sub {
-    font-size: 13px;
+    font-size: 15px;
     color: #888;
 }
 
 .stat-bar {
-    height: 8px;
+    height: 10px;
     background: rgba(0,0,0,0.08);
     border-radius: 99px;
     overflow: hidden;
@@ -544,9 +544,9 @@ button.stop:hover {
 
 .stat-uptime {
     background: rgba(255,255,255,0.7);
-    border-radius: 14px;
-    padding: 14px 20px;
-    font-size: 18px;
+    border-radius: 16px;
+    padding: 20px 28px;
+    font-size: 24px;
     font-weight: 600;
     color: #444;
     backdrop-filter: blur(10px);
@@ -554,51 +554,7 @@ button.stop:hover {
 
 .stat-uptime i {
     color: #258ea6;
-    margin-right: 6px;
-}
-
-.stats-processes {
-    background: rgba(255,255,255,0.82);
-    border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    backdrop-filter: blur(12px);
-}
-
-.processes-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 16px;
-}
-
-.process-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-}
-
-.process-table th {
-    text-align: left;
-    padding: 8px 12px;
-    color: #258ea6;
-    font-weight: 700;
-    border-bottom: 2px solid rgba(37,142,166,0.2);
-}
-
-.process-table td {
-    padding: 10px 12px;
-    color: #333;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-.process-table tr:last-child td {
-    border-bottom: none;
-}
-
-.process-table tr:hover td {
-    background: rgba(37,142,166,0.06);
+    margin-right: 8px;
 }
 
 .screen.active {
@@ -839,26 +795,23 @@ button.stop:hover {
         gap: 16px;
     }
 
-    .stats-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
     .stat-card {
-        padding: 16px 14px;
-        border-radius: 16px;
+        padding: 20px 16px;
+        border-radius: 18px;
+        gap: 8px;
     }
 
-    .stat-value {
+    .stat-icon {
         font-size: 24px;
     }
 
-    .process-table {
-        font-size: 13px;
+    .stat-value {
+        font-size: 32px;
     }
 
-    .process-table th,
-    .process-table td {
-        padding: 8px 6px;
+    .stat-uptime {
+        font-size: 18px;
+        padding: 16px 20px;
     }
 
 }

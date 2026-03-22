@@ -179,15 +179,6 @@
         <div class="stat-uptime">
           <i class="fa fa-clock-o"></i> Uptime: <span id="stat-uptime">—</span>
         </div>
-        <div class="stats-processes">
-          <div class="processes-title">Actieve processen</div>
-          <table class="process-table">
-            <thead>
-              <tr><th>Naam</th><th>CPU%</th><th>MEM%</th><th>PID</th></tr>
-            </thead>
-            <tbody id="process-tbody"></tbody>
-          </table>
-        </div>
       </div>
     </div>
 
@@ -260,11 +251,6 @@
 
             document.getElementById('stat-temp').textContent = d.temp !== null ? d.temp + ' °C' : 'N/A';
             document.getElementById('stat-uptime').textContent = d.uptime;
-
-            const tbody = document.getElementById('process-tbody');
-            tbody.innerHTML = d.processes.map(p =>
-              `<tr><td>${p.name}</td><td>${p.cpu}%</td><td>${p.mem}%</td><td>${p.pid}</td></tr>`
-            ).join('');
           });
       }
 
