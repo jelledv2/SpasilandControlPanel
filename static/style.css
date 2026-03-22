@@ -241,7 +241,7 @@ button.start,
 button.off  {
     width: 100%;
     padding: 20px 28px;
-    margin: 8px 0;
+    margin: 0;
     font-size: 30px;
     font-weight: 600;
     letter-spacing: 0.3px;
@@ -268,6 +268,17 @@ button:hover {
 button.stop {
     background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
     box-shadow: 0 4px 16px rgba(192,57,43,0.28);
+    width: auto;
+    padding: 20px 22px;
+    font-size: 0;
+    height: 100%;
+}
+
+button.stop::before {
+    content: "\f00d";
+    font-family: FontAwesome;
+    font-size: 24px;
+    display: block;
 }
 
 button.stop:hover {
@@ -383,10 +394,21 @@ button.stop:hover {
 
 .section {
     margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
 }
 
 .section:last-child {
     margin-bottom: 0;
+}
+
+.section form:first-child {
+    flex: 1;
+}
+
+.section form:last-child:not(:first-child) {
+    flex: 0 0 auto;
 }
 
 .output {
@@ -566,12 +588,8 @@ button.stop:hover {
     .section {
         margin-bottom: 0;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 8px;
-    }
-
-    .section form {
-        flex: 1;
     }
 
     button.start {
@@ -588,11 +606,15 @@ button.stop:hover {
     }
 
     button.stop {
-        width: 100%;
-        font-size: 14px;
-        padding: 12px 10px;
-        border-radius: 12px;
+        width: auto;
+        padding: 0 16px;
+        border-radius: 16px;
         margin: 0;
+        height: 100%;
+    }
+
+    button.stop::before {
+        font-size: 18px;
     }
 
     .search-screen {
