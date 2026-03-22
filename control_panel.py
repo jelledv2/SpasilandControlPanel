@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 import subprocess
 import os
+import time
 
 app = Flask(__name__)
 
@@ -160,6 +161,58 @@ def handle_link():
         ])
 
     return render_template(PAGE, output=output, active=set(running_processes.keys())
+    )
+
+
+@app.route("/stats")
+def get_stats():
+    import psutil
+
+    cpu_percent = psutil.cpu_percent(interval=0.5)
+
+    ram = psutil.virtual_memory()
+    ram_used_mb = ram.used // (1024 * 1024)
+    ram_total_mb = ram.total // (1024 * 1024)
+    ram_percent = ram.percent
+
+    disk = psutil.disk_usage("/")
+    disk_used_gb = disk.used / (1024 ** 3)
+    disk_total_gb = disk.total / (1024 ** 3)
+    disk_percent = disk.percent
+
+    temp = None
+    try:
+        with open("/sys/class/thermal/thermal_zone0/temp") as f:
+            temp = round(int(f.read().strip()) / 1000, 1)
+    except Exception:
+        pass
+
+    uptime_seconds = int(time.time() - psutil.boot_time())
+    hours, remainder = divmod(uptime_seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    uptime_str = f"{hours}u {minutes}m {seconds}s"
+
+    processes = []
+    for proc in sorted(psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent"]),
+                       key=lambda p: p.info["cpu_percent"] or 0, reverse=True)[:10]:
+        processes.append({
+            "pid": proc.info["pid"],
+            "name": proc.info["name"],
+            "cpu": round(proc.info["cpu_percent"] or 0, 1),
+            "mem": round(proc.info["memory_percent"] or 0, 1),
+        })
+
+    return jsonify(
+        cpu_percent=cpu_percent,
+        ram_used_mb=ram_used_mb,
+        ram_total_mb=ram_total_mb,
+        ram_percent=ram_percent,
+        disk_used_gb=round(disk_used_gb, 1),
+        disk_total_gb=round(disk_total_gb, 1),
+        disk_percent=disk_percent,
+        temp=temp,
+        uptime=uptime_str,
+        processes=processes,
     )
 
 

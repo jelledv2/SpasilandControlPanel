@@ -476,6 +476,131 @@ button.stop:hover {
     display: none;
 }
 
+.stats-screen {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.82);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 20px;
+    padding: 24px 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-icon {
+    font-size: 28px;
+}
+
+.stat-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+    line-height: 1;
+}
+
+.stat-sub {
+    font-size: 13px;
+    color: #888;
+}
+
+.stat-bar {
+    height: 8px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+}
+
+.stat-uptime {
+    background: rgba(255,255,255,0.7);
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    backdrop-filter: blur(10px);
+}
+
+.stat-uptime i {
+    color: #258ea6;
+    margin-right: 6px;
+}
+
+.stats-processes {
+    background: rgba(255,255,255,0.82);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    backdrop-filter: blur(12px);
+}
+
+.processes-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.process-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+.process-table th {
+    text-align: left;
+    padding: 8px 12px;
+    color: #258ea6;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(37,142,166,0.2);
+}
+
+.process-table td {
+    padding: 10px 12px;
+    color: #333;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.process-table tr:last-child td {
+    border-bottom: none;
+}
+
+.process-table tr:hover td {
+    background: rgba(37,142,166,0.06);
+}
+
 .screen.active {
     display: block;
 }
@@ -706,6 +831,34 @@ button.stop:hover {
         padding: 14px 16px;
         border-radius: 8px;
         gap: 10px;
+    }
+
+    .stats-screen {
+        margin: 16px 0;
+        padding: 0 16px;
+        gap: 16px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-card {
+        padding: 16px 14px;
+        border-radius: 16px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .process-table {
+        font-size: 13px;
+    }
+
+    .process-table th,
+    .process-table td {
+        padding: 8px 6px;
     }
 
 }
