@@ -269,9 +269,10 @@ button.stop {
     background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
     box-shadow: 0 4px 16px rgba(192,57,43,0.28);
     width: auto;
-    padding: 20px 22px;
+    padding: 0;
     font-size: 0;
     height: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 button.stop::before {
@@ -279,6 +280,18 @@ button.stop::before {
     font-family: FontAwesome;
     font-size: 24px;
     display: block;
+}
+
+button.search-stop {
+    width: 100%;
+    height: auto;
+    aspect-ratio: unset;
+    font-size: 30px;
+    padding: 20px 28px;
+}
+
+button.search-stop::before {
+    display: none;
 }
 
 button.stop:hover {
