@@ -564,20 +564,26 @@ button.stop:hover {
     background: rgba(255,255,255,0.4);
     border-radius: 18px;
     padding: 6px;
+    width: fit-content;
+    align-self: center;
 }
 
 .stats-tab {
-    flex: 1;
-    padding: 16px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
     border: none;
     border-radius: 12px;
     background: transparent;
     font-size: 20px;
-    font-weight: 600;
     color: #444;
     cursor: pointer;
     transition: background 0.18s, color 0.18s;
     box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
 }
 
 .stats-tab:hover {
@@ -938,10 +944,6 @@ button.stop:hover {
         padding: 16px 20px;
     }
 
-    .stats-tab {
-        font-size: 16px;
-        padding: 12px;
-    }
 
 
     .process-row {

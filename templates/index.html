@@ -150,8 +150,8 @@
     <div id="screen-stats" class="screen">
       <div class="stats-screen">
         <div class="stats-tabs">
-          <button class="stats-tab active" type="button" onclick="switchStatsTab('overview', this)"><i class="fa fa-tachometer"></i> Overview</button>
-          <button class="stats-tab" type="button" onclick="switchStatsTab('processes', this)"><i class="fa fa-list"></i> Processes</button>
+          <button class="stats-tab active" type="button" onclick="switchStatsTab('overview', this)"><i class="fa fa-tachometer"></i></button>
+          <button class="stats-tab" type="button" onclick="switchStatsTab('processes', this)"><i class="fa fa-list"></i></button>
         </div>
 
         <div id="stats-tab-overview" class="stats-tab-panel active">
@@ -244,6 +244,7 @@
       }
 
       let statsInterval = null;
+      let processInterval = null;
       let currentStatsTab = 'overview';
 
       function fetchStats() {
@@ -313,13 +314,12 @@
         closeSidebar();
 
         clearInterval(statsInterval);
+        clearInterval(processInterval);
         if (screen === 'stats') {
           fetchStats();
           fetchProcesses();
-          statsInterval = setInterval(() => {
-            fetchStats();
-            fetchProcesses();
-          }, 3000);
+          statsInterval = setInterval(fetchStats, 3000);
+          processInterval = setInterval(fetchProcesses, 10000);
         }
       }
 

@@ -200,7 +200,7 @@ def get_processes():
     else:
         procs.sort(key=lambda p: p['cpu'], reverse=True)
 
-    return jsonify(processes=procs[:10])
+    return jsonify(processes=procs[:5])
 
 
 @app.route("/stats")
