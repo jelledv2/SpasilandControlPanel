@@ -164,6 +164,17 @@ def handle_link():
     )
 
 
+@app.route("/kill/<int:pid>", methods=["POST"])
+def kill_process(pid):
+    import psutil
+    try:
+        proc = psutil.Process(pid)
+        proc.terminate()
+        return jsonify(success=True)
+    except (psutil.NoSuchProcess, psutil.AccessDenied) as e:
+        return jsonify(success=False, error=str(e)), 400
+
+
 @app.route("/processes")
 def get_processes():
     import psutil

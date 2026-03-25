@@ -602,45 +602,6 @@ button.stop:hover {
     gap: 24px;
 }
 
-.process-sort-toggle {
-    display: flex;
-    gap: 10px;
-}
-
-.sort-btn {
-    flex: 1;
-    padding: 18px;
-    border: none;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.5);
-    color: #444;
-    font-size: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.18s, color 0.18s;
-    box-shadow: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.sort-btn:hover {
-    background: rgba(255,255,255,0.75);
-    color: #258ea6;
-    transform: none;
-    box-shadow: none;
-}
-
-.sort-btn.active {
-    background: #258ea6;
-    color: white;
-}
-
-.sort-btn.active:hover {
-    background: #1a7a91;
-    color: white;
-}
 
 .process-list {
     display: flex;
@@ -650,7 +611,7 @@ button.stop:hover {
 
 .process-row {
     display: grid;
-    grid-template-columns: 36px 1fr auto auto;
+    grid-template-columns: 36px 1fr auto auto auto;
     align-items: center;
     gap: 16px;
     background: rgba(255,255,255,0.75);
@@ -687,6 +648,37 @@ button.stop:hover {
     font-weight: 600;
     color: #549f93;
     white-space: nowrap;
+}
+
+.process-kill-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(192, 57, 43, 0.12);
+    color: #c0392b;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    transition: background 0.15s, color 0.15s;
+    box-shadow: none;
+    flex-shrink: 0;
+}
+
+.process-kill-btn:hover {
+    background: #c0392b;
+    color: white;
+    transform: none;
+    box-shadow: none;
+}
+
+.process-kill-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .screen.active {
@@ -951,13 +943,9 @@ button.stop:hover {
         padding: 12px;
     }
 
-    .sort-btn {
-        font-size: 16px;
-        padding: 14px;
-    }
 
     .process-row {
-        grid-template-columns: 28px 1fr auto auto;
+        grid-template-columns: 28px 1fr auto auto auto;
         gap: 10px;
         padding: 12px 14px;
     }

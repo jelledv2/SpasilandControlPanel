@@ -188,14 +188,6 @@
         </div>
 
         <div id="stats-tab-processes" class="stats-tab-panel">
-          <div class="process-sort-toggle">
-            <button class="sort-btn active" type="button" id="sort-cpu-btn" onclick="switchProcessSort('cpu', this)">
-              <i class="fa fa-microchip"></i> CPU
-            </button>
-            <button class="sort-btn" type="button" id="sort-ram-btn" onclick="switchProcessSort('ram', this)">
-              <i class="fa fa-database"></i> RAM
-            </button>
-          </div>
           <div id="process-list" class="process-list"></div>
         </div>
       </div>
@@ -253,7 +245,6 @@
 
       let statsInterval = null;
       let currentStatsTab = 'overview';
-      let currentProcessSort = 'cpu';
 
       function fetchStats() {
         fetch('/stats')
@@ -276,7 +267,7 @@
       }
 
       function fetchProcesses() {
-        fetch('/processes?sort=' + currentProcessSort)
+        fetch('/processes?sort=cpu')
           .then(r => r.json())
           .then(d => {
             const list = document.getElementById('process-list');
@@ -286,8 +277,22 @@
                 <span class="process-name">${p.name}</span>
                 <span class="process-cpu"><i class="fa fa-microchip"></i> ${p.cpu}%</span>
                 <span class="process-ram"><i class="fa fa-database"></i> ${p.ram_mb} MB</span>
+                <button class="process-kill-btn" type="button" onclick="killProcess(${p.pid}, this)"><i class="fa fa-times"></i></button>
               </div>
             `).join('');
+          });
+      }
+
+      function killProcess(pid, btn) {
+        btn.disabled = true;
+        fetch('/kill/' + pid, { method: 'POST' })
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              btn.closest('.process-row').remove();
+            } else {
+              btn.disabled = false;
+            }
           });
       }
 
@@ -299,12 +304,6 @@
         document.getElementById('stats-tab-' + tab).classList.add('active');
       }
 
-      function switchProcessSort(sort, btn) {
-        currentProcessSort = sort;
-        document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        fetchProcesses();
-      }
 
       function navigateTo(screen, btn) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
