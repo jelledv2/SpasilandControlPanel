@@ -479,37 +479,37 @@ button.stop:hover {
 
 .stats-screen {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 0 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 14px;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 14px;
 }
 
 .stat-card {
     background: rgba(255,255,255,0.82);
     border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 24px;
-    padding: 36px 32px;
+    border-radius: 18px;
+    padding: 20px 22px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .stat-icon {
-    font-size: 36px;
+    font-size: 26px;
 }
 
 .stat-label {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     color: #666;
     text-transform: uppercase;
@@ -517,23 +517,23 @@ button.stop:hover {
 }
 
 .stat-value {
-    font-size: 52px;
+    font-size: 36px;
     font-weight: 700;
     color: #222;
     line-height: 1;
 }
 
 .stat-sub {
-    font-size: 15px;
+    font-size: 13px;
     color: #888;
 }
 
 .stat-bar {
-    height: 10px;
+    height: 8px;
     background: rgba(0,0,0,0.08);
     border-radius: 99px;
     overflow: hidden;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .stat-bar-fill {
@@ -545,9 +545,9 @@ button.stop:hover {
 
 .stat-uptime {
     background: rgba(255,255,255,0.7);
-    border-radius: 16px;
-    padding: 20px 28px;
-    font-size: 24px;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #444;
     backdrop-filter: blur(10px);
@@ -605,7 +605,7 @@ button.stop:hover {
 .stats-tab-panel.active {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 14px;
 }
 
 
