@@ -558,6 +558,137 @@ button.stop:hover {
     margin-right: 8px;
 }
 
+.stats-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 18px;
+    padding: 6px;
+}
+
+.stats-tab {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    box-shadow: none;
+}
+
+.stats-tab:hover {
+    background: rgba(255,255,255,0.6);
+    color: #258ea6;
+    transform: none;
+    box-shadow: none;
+}
+
+.stats-tab.active {
+    background: rgba(255,255,255,0.9);
+    color: #258ea6;
+}
+
+.stats-tab-panel {
+    display: none;
+}
+
+.stats-tab-panel.active {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.process-sort-toggle {
+    display: flex;
+    gap: 10px;
+}
+
+.sort-btn {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.5);
+    color: #444;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.sort-btn:hover {
+    background: rgba(255,255,255,0.75);
+    color: #258ea6;
+    transform: none;
+    box-shadow: none;
+}
+
+.sort-btn.active {
+    background: #258ea6;
+    color: white;
+}
+
+.sort-btn.active:hover {
+    background: #1a7a91;
+    color: white;
+}
+
+.process-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.process-row {
+    display: grid;
+    grid-template-columns: 36px 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.75);
+    border-radius: 14px;
+    padding: 16px 20px;
+    backdrop-filter: blur(8px);
+}
+
+.process-rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: #aaa;
+    text-align: center;
+}
+
+.process-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.process-cpu {
+    font-size: 16px;
+    font-weight: 600;
+    color: #258ea6;
+    white-space: nowrap;
+}
+
+.process-ram {
+    font-size: 16px;
+    font-weight: 600;
+    color: #549f93;
+    white-space: nowrap;
+}
+
 .screen.active {
     display: block;
 }
@@ -813,6 +944,34 @@ button.stop:hover {
     .stat-uptime {
         font-size: 18px;
         padding: 16px 20px;
+    }
+
+    .stats-tab {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .sort-btn {
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    .process-row {
+        grid-template-columns: 28px 1fr auto auto;
+        gap: 10px;
+        padding: 12px 14px;
+    }
+
+    .process-rank {
+        font-size: 15px;
+    }
+
+    .process-name {
+        font-size: 15px;
+    }
+
+    .process-cpu, .process-ram {
+        font-size: 13px;
     }
 
 }

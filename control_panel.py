@@ -164,6 +164,33 @@ def handle_link():
     )
 
 
+@app.route("/processes")
+def get_processes():
+    import psutil
+    sort_by = request.args.get("sort", "cpu")
+
+    procs = []
+    for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_info']):
+        try:
+            info = proc.info
+            ram_mb = info['memory_info'].rss // (1024 * 1024) if info['memory_info'] else 0
+            procs.append({
+                'pid': info['pid'],
+                'name': info['name'],
+                'cpu': round(info['cpu_percent'], 1),
+                'ram_mb': ram_mb,
+            })
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
+
+    if sort_by == "ram":
+        procs.sort(key=lambda p: p['ram_mb'], reverse=True)
+    else:
+        procs.sort(key=lambda p: p['cpu'], reverse=True)
+
+    return jsonify(processes=procs[:10])
+
+
 @app.route("/stats")
 def get_stats():
     import psutil

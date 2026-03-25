@@ -149,35 +149,54 @@
 
     <div id="screen-stats" class="screen">
       <div class="stats-screen">
-        <div class="stat-uptime">
-          <i class="fa fa-clock-o"></i> Uptime: <span id="stat-uptime">—</span>
+        <div class="stats-tabs">
+          <button class="stats-tab active" type="button" onclick="switchStatsTab('overview', this)"><i class="fa fa-tachometer"></i> Overview</button>
+          <button class="stats-tab" type="button" onclick="switchStatsTab('processes', this)"><i class="fa fa-list"></i> Processes</button>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon" style="color:#258ea6"><i class="fa fa-microchip"></i></div>
-            <div class="stat-label">CPU</div>
-            <div class="stat-value" id="stat-cpu">—</div>
-            <div class="stat-bar"><div class="stat-bar-fill" id="bar-cpu" style="background:#258ea6"></div></div>
+
+        <div id="stats-tab-overview" class="stats-tab-panel active">
+          <div class="stat-uptime">
+            <i class="fa fa-clock-o"></i> Uptime: <span id="stat-uptime">—</span>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="color:#549f93"><i class="fa fa-database"></i></div>
-            <div class="stat-label">RAM</div>
-            <div class="stat-value" id="stat-ram">—</div>
-            <div class="stat-bar"><div class="stat-bar-fill" id="bar-ram" style="background:#549f93"></div></div>
-            <div class="stat-sub" id="stat-ram-sub"></div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#258ea6"><i class="fa fa-microchip"></i></div>
+              <div class="stat-label">CPU</div>
+              <div class="stat-value" id="stat-cpu">—</div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="bar-cpu" style="background:#258ea6"></div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#549f93"><i class="fa fa-database"></i></div>
+              <div class="stat-label">RAM</div>
+              <div class="stat-value" id="stat-ram">—</div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="bar-ram" style="background:#549f93"></div></div>
+              <div class="stat-sub" id="stat-ram-sub"></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#9faf90"><i class="fa fa-hdd-o"></i></div>
+              <div class="stat-label">Disk</div>
+              <div class="stat-value" id="stat-disk">—</div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="bar-disk" style="background:#9faf90"></div></div>
+              <div class="stat-sub" id="stat-disk-sub"></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#e2b1b1"><i class="fa fa-thermometer-half"></i></div>
+              <div class="stat-label">Temperature</div>
+              <div class="stat-value" id="stat-temp">—</div>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="color:#9faf90"><i class="fa fa-hdd-o"></i></div>
-            <div class="stat-label">Disk</div>
-            <div class="stat-value" id="stat-disk">—</div>
-            <div class="stat-bar"><div class="stat-bar-fill" id="bar-disk" style="background:#9faf90"></div></div>
-            <div class="stat-sub" id="stat-disk-sub"></div>
+        </div>
+
+        <div id="stats-tab-processes" class="stats-tab-panel">
+          <div class="process-sort-toggle">
+            <button class="sort-btn active" type="button" id="sort-cpu-btn" onclick="switchProcessSort('cpu', this)">
+              <i class="fa fa-microchip"></i> CPU
+            </button>
+            <button class="sort-btn" type="button" id="sort-ram-btn" onclick="switchProcessSort('ram', this)">
+              <i class="fa fa-database"></i> RAM
+            </button>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="color:#e2b1b1"><i class="fa fa-thermometer-half"></i></div>
-            <div class="stat-label">Temperature</div>
-            <div class="stat-value" id="stat-temp">—</div>
-          </div>
+          <div id="process-list" class="process-list"></div>
         </div>
       </div>
     </div>
@@ -233,6 +252,8 @@
       }
 
       let statsInterval = null;
+      let currentStatsTab = 'overview';
+      let currentProcessSort = 'cpu';
 
       function fetchStats() {
         fetch('/stats')
@@ -254,6 +275,37 @@
           });
       }
 
+      function fetchProcesses() {
+        fetch('/processes?sort=' + currentProcessSort)
+          .then(r => r.json())
+          .then(d => {
+            const list = document.getElementById('process-list');
+            list.innerHTML = d.processes.map((p, i) => `
+              <div class="process-row">
+                <span class="process-rank">${i + 1}</span>
+                <span class="process-name">${p.name}</span>
+                <span class="process-cpu"><i class="fa fa-microchip"></i> ${p.cpu}%</span>
+                <span class="process-ram"><i class="fa fa-database"></i> ${p.ram_mb} MB</span>
+              </div>
+            `).join('');
+          });
+      }
+
+      function switchStatsTab(tab, btn) {
+        currentStatsTab = tab;
+        document.querySelectorAll('.stats-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.stats-tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('stats-tab-' + tab).classList.add('active');
+      }
+
+      function switchProcessSort(sort, btn) {
+        currentProcessSort = sort;
+        document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        fetchProcesses();
+      }
+
       function navigateTo(screen, btn) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('screen-' + screen).classList.add('active');
@@ -264,7 +316,11 @@
         clearInterval(statsInterval);
         if (screen === 'stats') {
           fetchStats();
-          statsInterval = setInterval(fetchStats, 3000);
+          fetchProcesses();
+          statsInterval = setInterval(() => {
+            fetchStats();
+            fetchProcesses();
+          }, 3000);
         }
       }
 
