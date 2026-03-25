@@ -179,6 +179,7 @@ def kill_process(pid):
 def get_processes():
     import psutil
     sort_by = request.args.get("sort", "cpu")
+    cpu_count = psutil.cpu_count() or 1
 
     procs = []
     for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_info']):
@@ -188,7 +189,7 @@ def get_processes():
             procs.append({
                 'pid': info['pid'],
                 'name': info['name'],
-                'cpu': round(info['cpu_percent'], 1),
+                'cpu': round(info['cpu_percent'] / cpu_count, 1),
                 'ram_mb': ram_mb,
             })
         except (psutil.NoSuchProcess, psutil.AccessDenied):
