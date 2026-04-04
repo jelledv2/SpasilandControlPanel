@@ -245,6 +245,14 @@ def get_stats():
     )
 
 
+@app.route("/audio/surround", methods=["POST"])
+def open_surround():
+    env = os.environ.copy()
+    env["DISPLAY"] = ":0"
+    subprocess.Popen(["qpwgraph", "/home/jelle/surround.qpwgraph"], env=env)
+    return jsonify(success=True)
+
+
 def pulse_env():
     env = os.environ.copy()
     uid = os.getuid()

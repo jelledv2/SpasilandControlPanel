@@ -193,6 +193,10 @@
             <i class="fa fa-volume-off" id="audio-mute-icon"></i>
             <span id="audio-mute-label">Mute</span>
           </button>
+          <button class="audio-surround-btn" type="button" onclick="openSurround()">
+            <i class="fa fa-sitemap"></i>
+            <span>Pipewire Graph</span>
+          </button>
         </div>
       </div>
     </div>
@@ -436,6 +440,10 @@
         fetch('/audio/mute', { method: 'POST' })
           .then(r => r.json())
           .then(d => { if (d.success) updateAudioUI(currentVolume, d.muted); });
+      }
+
+      function openSurround() {
+        fetch('/audio/surround', { method: 'POST' });
       }
 
       function toggleSidebar() {
