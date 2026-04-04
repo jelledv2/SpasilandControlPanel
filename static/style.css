@@ -856,7 +856,7 @@ button.stop:hover {
     background: rgba(255,255,255,0.62);
     backdrop-filter: blur(12px);
     color: #258ea6;
-    font-size: 18px;
+    font-size: 26px;
     font-weight: 700;
     cursor: pointer;
     padding: 0 20px;
