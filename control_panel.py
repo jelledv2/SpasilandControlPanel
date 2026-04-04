@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, jsonify
 import subprocess
 import os
 import time
+import re
 
 app = Flask(__name__)
 
@@ -242,6 +243,54 @@ def get_stats():
         temp=temp,
         uptime=uptime_str,
     )
+
+
+def pulse_env():
+    env = os.environ.copy()
+    uid = os.getuid()
+    env.setdefault("XDG_RUNTIME_DIR", f"/run/user/{uid}")
+    env.setdefault("PULSE_SERVER", f"unix:/run/user/{uid}/pulse/native")
+    return env
+
+
+@app.route("/audio/volume", methods=["GET"])
+def get_volume():
+    env = pulse_env()
+    try:
+        vol_out = subprocess.check_output(["pactl", "get-sink-volume", "@DEFAULT_SINK@"], env=env, text=True)
+        match = re.search(r'(\d+)%', vol_out)
+        volume = int(match.group(1)) if match else 0
+
+        mute_out = subprocess.check_output(["pactl", "get-sink-mute", "@DEFAULT_SINK@"], env=env, text=True)
+        muted = "yes" in mute_out.lower()
+
+        return jsonify(volume=volume, muted=muted)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.route("/audio/volume", methods=["POST"])
+def set_volume():
+    env = pulse_env()
+    data = request.get_json()
+    volume = max(0, min(150, int(data.get("volume", 50))))
+    try:
+        subprocess.run(["pactl", "set-sink-volume", "@DEFAULT_SINK@", f"{volume}%"], env=env, check=True)
+        return jsonify(success=True, volume=volume)
+    except Exception as e:
+        return jsonify(success=False, error=str(e)), 500
+
+
+@app.route("/audio/mute", methods=["POST"])
+def toggle_mute():
+    env = pulse_env()
+    try:
+        subprocess.run(["pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle"], env=env, check=True)
+        mute_out = subprocess.check_output(["pactl", "get-sink-mute", "@DEFAULT_SINK@"], env=env, text=True)
+        muted = "yes" in mute_out.lower()
+        return jsonify(success=True, muted=muted)
+    except Exception as e:
+        return jsonify(success=False, error=str(e)), 500
 
 
 if __name__ == "__main__":

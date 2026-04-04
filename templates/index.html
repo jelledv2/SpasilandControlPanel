@@ -16,6 +16,9 @@
         <button class="sidebar-btn" type="button" onclick="navigateTo('search', this)">
           <i class="fa fa-search"></i>
         </button>
+        <button class="sidebar-btn" type="button" onclick="navigateTo('audio', this)">
+          <i class="fa fa-volume-up"></i>
+        </button>
         <button class="sidebar-btn" type="button" onclick="navigateTo('stats', this)">
           <i class="fa fa-tachometer"></i>
         </button>
@@ -142,6 +145,25 @@
           </button>
           <button type="button" class="suggestion" onclick="submitSearch('Jennifer Lawrence latest movies')">
             <i class="fa fa-film"></i> Jennifer Lawrence latest movies
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-audio" class="screen">
+      <div class="audio-screen">
+        <div class="audio-card">
+          <div class="audio-volume-display">
+            <i class="fa fa-volume-up audio-vol-icon" id="audio-icon"></i>
+            <span class="audio-volume-number" id="audio-volume-value">—</span>
+          </div>
+          <input type="range" class="audio-slider" id="audio-slider" min="0" max="150" value="100">
+          <div class="audio-slider-labels">
+            <span>0%</span>
+            <span>150%</span>
+          </div>
+          <button class="audio-mute-btn" id="audio-mute-btn" type="button" onclick="toggleMute()">
+            <i class="fa fa-volume-up"></i> <span id="audio-mute-label">Mute</span>
           </button>
         </div>
       </div>
@@ -321,7 +343,57 @@
           statsInterval = setInterval(fetchStats, 3000);
           processInterval = setInterval(fetchProcesses, 10000);
         }
+        if (screen === 'audio') {
+          fetchAudio();
+        }
       }
+
+      function fetchAudio() {
+        fetch('/audio/volume')
+          .then(r => r.json())
+          .then(d => updateAudioUI(d.volume, d.muted));
+      }
+
+      function updateAudioUI(volume, muted) {
+        document.getElementById('audio-volume-value').textContent = volume + '%';
+        document.getElementById('audio-slider').value = volume;
+        const icon = document.getElementById('audio-icon');
+        const muteBtn = document.getElementById('audio-mute-btn');
+        const muteLabel = document.getElementById('audio-mute-label');
+        if (muted) {
+          icon.className = 'fa fa-volume-off audio-vol-icon';
+          muteBtn.classList.add('muted');
+          muteBtn.querySelector('i').className = 'fa fa-volume-up';
+          muteLabel.textContent = 'Unmute';
+        } else {
+          icon.className = 'fa fa-volume-up audio-vol-icon';
+          muteBtn.classList.remove('muted');
+          muteBtn.querySelector('i').className = 'fa fa-volume-off';
+          muteLabel.textContent = 'Mute';
+        }
+      }
+
+      function toggleMute() {
+        fetch('/audio/mute', { method: 'POST' })
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              updateAudioUI(parseInt(document.getElementById('audio-slider').value), d.muted);
+            }
+          });
+      }
+
+      document.getElementById('audio-slider').addEventListener('input', function() {
+        document.getElementById('audio-volume-value').textContent = this.value + '%';
+      });
+
+      document.getElementById('audio-slider').addEventListener('change', function() {
+        fetch('/audio/volume', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ volume: parseInt(this.value) })
+        });
+      });
 
       function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
