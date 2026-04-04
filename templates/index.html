@@ -152,18 +152,40 @@
 
     <div id="screen-audio" class="screen">
       <div class="audio-screen">
-        <div class="audio-card">
-          <div class="audio-volume-display">
+        <div class="audio-dial-wrapper">
+          <svg class="audio-dial-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="audioFillGrad" x1="0" y1="220" x2="220" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#9faf90"/>
+                <stop offset="55%" stop-color="#549f93"/>
+                <stop offset="100%" stop-color="#258ea6"/>
+              </linearGradient>
+              <filter id="audioGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle class="audio-track-bg"   cx="110" cy="110" r="90" transform="rotate(135 110 110)"/>
+            <circle class="audio-track-fill" cx="110" cy="110" r="90" transform="rotate(135 110 110)" id="audio-track-fill"/>
+            <circle class="audio-dot" cx="46.4"  cy="173.6"/>
+            <circle class="audio-dot" cx="173.6" cy="173.6"/>
+          </svg>
+          <div class="audio-dial-center">
             <i class="fa fa-volume-up audio-vol-icon" id="audio-icon"></i>
-            <span class="audio-volume-number" id="audio-volume-value">—</span>
+            <div class="audio-volume-number" id="audio-volume-value">—</div>
+            <div class="audio-vol-label">volume</div>
           </div>
+        </div>
+
+        <div class="audio-controls">
           <input type="range" class="audio-slider" id="audio-slider" min="0" max="150" value="100">
           <div class="audio-slider-labels">
             <span>0%</span>
             <span>150%</span>
           </div>
           <button class="audio-mute-btn" id="audio-mute-btn" type="button" onclick="toggleMute()">
-            <i class="fa fa-volume-up"></i> <span id="audio-mute-label">Mute</span>
+            <i class="fa fa-volume-off" id="audio-mute-icon"></i>
+            <span id="audio-mute-label">Mute</span>
           </button>
         </div>
       </div>
@@ -348,6 +370,17 @@
         }
       }
 
+      let currentVolume = 0;
+      let currentMuted = false;
+      const AUDIO_CIRC  = 2 * Math.PI * 90;   // ≈ 565.49
+      const AUDIO_TRACK = AUDIO_CIRC * 0.75;   // ≈ 424.12  (270° arc)
+
+      function setDialFill(volume) {
+        const fill = AUDIO_TRACK * (volume / 150);
+        document.getElementById('audio-track-fill').style.strokeDasharray =
+          fill + ' ' + (AUDIO_CIRC - fill);
+      }
+
       function fetchAudio() {
         fetch('/audio/volume')
           .then(r => r.json())
@@ -355,45 +388,49 @@
       }
 
       function updateAudioUI(volume, muted) {
+        currentVolume = volume;
+        currentMuted  = muted;
         document.getElementById('audio-volume-value').textContent = volume + '%';
         document.getElementById('audio-slider').value = volume;
-        const icon = document.getElementById('audio-icon');
-        const muteBtn = document.getElementById('audio-mute-btn');
+        setDialFill(volume);
+        const icon      = document.getElementById('audio-icon');
+        const muteBtn   = document.getElementById('audio-mute-btn');
+        const muteIcon  = document.getElementById('audio-mute-icon');
         const muteLabel = document.getElementById('audio-mute-label');
         if (muted) {
-          icon.className = 'fa fa-volume-off audio-vol-icon';
-          muteBtn.classList.add('muted');
-          muteBtn.querySelector('i').className = 'fa fa-volume-up';
+          icon.className     = 'fa fa-volume-off audio-vol-icon';
+          muteIcon.className = 'fa fa-volume-up';
           muteLabel.textContent = 'Unmute';
+          muteBtn.classList.add('muted');
         } else {
-          icon.className = 'fa fa-volume-up audio-vol-icon';
-          muteBtn.classList.remove('muted');
-          muteBtn.querySelector('i').className = 'fa fa-volume-off';
+          icon.className     = 'fa fa-volume-up audio-vol-icon';
+          muteIcon.className = 'fa fa-volume-off';
           muteLabel.textContent = 'Mute';
+          muteBtn.classList.remove('muted');
         }
       }
+
+      document.getElementById('audio-slider').addEventListener('input', function() {
+        const v = parseInt(this.value);
+        document.getElementById('audio-volume-value').textContent = v + '%';
+        setDialFill(v);
+      });
+
+      document.getElementById('audio-slider').addEventListener('change', function() {
+        const v = parseInt(this.value);
+        currentVolume = v;
+        fetch('/audio/volume', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ volume: v })
+        });
+      });
 
       function toggleMute() {
         fetch('/audio/mute', { method: 'POST' })
           .then(r => r.json())
-          .then(d => {
-            if (d.success) {
-              updateAudioUI(parseInt(document.getElementById('audio-slider').value), d.muted);
-            }
-          });
+          .then(d => { if (d.success) updateAudioUI(currentVolume, d.muted); });
       }
-
-      document.getElementById('audio-slider').addEventListener('input', function() {
-        document.getElementById('audio-volume-value').textContent = this.value + '%';
-      });
-
-      document.getElementById('audio-slider').addEventListener('change', function() {
-        fetch('/audio/volume', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ volume: parseInt(this.value) })
-        });
-      });
 
       function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
