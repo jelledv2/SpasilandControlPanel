@@ -197,6 +197,7 @@
             <i class="fa fa-sitemap"></i>
             <span>Pipewire Graph</span>
           </button>
+          <button class="stop" id="surround-stop-btn" type="button" onclick="closeSurround()" style="display:none">Close Pipewire Graph</button>
         </div>
       </div>
     </div>
@@ -443,7 +444,15 @@
       }
 
       function openSurround() {
-        fetch('/audio/surround', { method: 'POST' });
+        fetch('/audio/surround', { method: 'POST' })
+          .then(r => r.json())
+          .then(d => { if (d.success) document.getElementById('surround-stop-btn').style.display = ''; });
+      }
+
+      function closeSurround() {
+        fetch('/audio/surround/stop', { method: 'POST' })
+          .then(r => r.json())
+          .then(d => { if (d.success) document.getElementById('surround-stop-btn').style.display = 'none'; });
       }
 
       function toggleSidebar() {

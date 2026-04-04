@@ -249,7 +249,14 @@ def get_stats():
 def open_surround():
     env = os.environ.copy()
     env["DISPLAY"] = ":0"
-    subprocess.Popen(["qpwgraph", "/home/jelle/surround.qpwgraph"], env=env)
+    proc = subprocess.Popen(["qpwgraph", "/home/jelle/surround.qpwgraph"], env=env)
+    running_processes["surround"] = proc
+    return jsonify(success=True)
+
+
+@app.route("/audio/surround/stop", methods=["POST"])
+def close_surround():
+    stop_process_logic("surround")
     return jsonify(success=True)
 
 
