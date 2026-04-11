@@ -73,7 +73,7 @@ def stop_process(action_name):
 @app.route("/lights/disco/on", methods=["POST"])
 def disco_on():
     global disco_light_on
-    subprocess.Popen(["sudo", "python3", "disco_light.py", "on"])
+    subprocess.Popen(["sudo", "python3", "/home/jelle/disco_light.py", "on"])
     disco_light_on = True
     return jsonify(success=True, disco_on=True)
 
@@ -81,7 +81,7 @@ def disco_on():
 @app.route("/lights/disco/off", methods=["POST"])
 def disco_off():
     global disco_light_on
-    subprocess.Popen(["sudo", "python3", "disco_light.py", "off"])
+    subprocess.Popen(["sudo", "python3", "/home/jelle/disco_light.py", "off"])
     disco_light_on = False
     return jsonify(success=True, disco_on=False)
 
