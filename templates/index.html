@@ -253,12 +253,12 @@
 
     <div id="screen-lights" class="screen">
       <div class="main-container">
-        <div class="section">
-          <button class="start" id="disco-on-btn" type="button" onclick="discoOn()" {% if disco_on %}style="display:none"{% endif %}>
-            <i class="fa fa-lightbulb-o start-icon"></i><span>Disco Light</span>
-          </button>
-          <button class="stop" id="disco-off-btn" type="button" onclick="discoOff()" {% if not disco_on %}style="display:none"{% endif %}>
-            Stop Disco Light
+        <div class="light-card">
+          <div class="light-card-info">
+            <span class="light-card-name">Disco Light</span>
+          </div>
+          <button class="toggle-switch{% if disco_on %} on{% endif %}" id="disco-toggle" type="button" onclick="toggleDisco()" aria-label="Toggle Disco Light">
+            <span class="toggle-knob"></span>
           </button>
         </div>
       </div>
@@ -471,24 +471,14 @@
           .then(d => { if (d.success) document.getElementById('surround-stop-btn').style.display = 'none'; });
       }
 
-      function discoOn() {
-        fetch('/lights/disco/on', { method: 'POST' })
+      function toggleDisco() {
+        const btn = document.getElementById('disco-toggle');
+        const isOn = btn.classList.contains('on');
+        fetch(isOn ? '/lights/disco/off' : '/lights/disco/on', { method: 'POST' })
           .then(r => r.json())
           .then(d => {
             if (d.success) {
-              document.getElementById('disco-on-btn').style.display = 'none';
-              document.getElementById('disco-off-btn').style.display = '';
-            }
-          });
-      }
-
-      function discoOff() {
-        fetch('/lights/disco/off', { method: 'POST' })
-          .then(r => r.json())
-          .then(d => {
-            if (d.success) {
-              document.getElementById('disco-off-btn').style.display = 'none';
-              document.getElementById('disco-on-btn').style.display = '';
+              btn.classList.toggle('on', d.disco_on);
             }
           });
       }

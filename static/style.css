@@ -928,6 +928,87 @@ button.stop:hover {
     box-shadow: 0 8px 28px rgba(84,159,147,0.35);
 }
 
+.light-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    border-radius: 20px;
+}
+
+.light-card-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.light-card-icon {
+    font-size: 36px;
+    color: #bbb;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.light-card-icon.active {
+    color: #258ea6;
+    text-shadow: 0 0 18px rgba(37,142,166,0.5);
+}
+
+.light-card-name {
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+}
+
+.toggle-switch {
+    width: 100px;
+    height: 54px;
+    border-radius: 99px;
+    border: none;
+    background: rgba(0,0,0,0.13);
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10) inset;
+    margin: 0;
+}
+
+.toggle-switch.on {
+    background: linear-gradient(135deg, #258ea6 0%, #549f93 100%);
+    box-shadow: 0 4px 18px rgba(37,142,166,0.38);
+}
+
+.toggle-switch:hover {
+    background: rgba(0,0,0,0.20);
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) inset;
+    color: inherit;
+}
+
+.toggle-switch.on:hover {
+    background: linear-gradient(135deg, #1a7a91 0%, #3d8a7f 100%);
+    box-shadow: 0 6px 22px rgba(37,142,166,0.48);
+}
+
+.toggle-knob {
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.22);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+.toggle-switch.on .toggle-knob {
+    left: calc(100% - 49px);
+}
+
 .screen.active {
     display: block;
 }
