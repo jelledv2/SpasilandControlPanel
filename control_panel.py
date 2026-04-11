@@ -9,6 +9,7 @@ app = Flask(__name__)
 PAGE="index.html"
 
 running_processes = {}
+disco_light_on = False
 
 import os, subprocess
 
@@ -65,13 +66,29 @@ def stop_process_logic(action_name):
 @app.route("/stop/<action_name>", methods=["POST"])
 def stop_process(action_name):
     if not stop_process_logic(action_name):
-        return render_template(PAGE, output=f"Proces {action_name} niet actief", active=set(running_processes.keys()))
+        return render_template(PAGE, output=f"Proces {action_name} niet actief", active=set(running_processes.keys()), disco_on=disco_light_on)
 
-    return render_template(PAGE, output=f"Gestopt: {action_name}", active=set(running_processes.keys()))
+    return render_template(PAGE, output=f"Gestopt: {action_name}", active=set(running_processes.keys()), disco_on=disco_light_on)
+
+@app.route("/lights/disco/on", methods=["POST"])
+def disco_on():
+    global disco_light_on
+    subprocess.Popen(["sudo", "python3", "disco_light.py", "on"])
+    disco_light_on = True
+    return jsonify(success=True, disco_on=True)
+
+
+@app.route("/lights/disco/off", methods=["POST"])
+def disco_off():
+    global disco_light_on
+    subprocess.Popen(["sudo", "python3", "disco_light.py", "off"])
+    disco_light_on = False
+    return jsonify(success=True, disco_on=False)
+
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template(PAGE, output="Nog geen actie uitgevoerd.")
+    return render_template(PAGE, output="Nog geen actie uitgevoerd.", disco_on=disco_light_on)
 
 @app.route("/action/<action_name>", methods=["POST"])
 def do_action(action_name):
@@ -138,7 +155,7 @@ def do_action(action_name):
             ])
     else:
         output = "onbekende actie"
-    return render_template(PAGE, output=output, active=set(running_processes.keys()))
+    return render_template(PAGE, output=output, active=set(running_processes.keys()), disco_on=disco_light_on)
 
 @app.route("/action/link", methods=["POST"])
 def handle_link():
@@ -161,8 +178,8 @@ def handle_link():
         url
         ])
 
-    return render_template(PAGE, output=output, active=set(running_processes.keys())
-    )
+    return render_template(PAGE, output=output, active=set(running_processes.keys()), disco_on=disco_light_on)
+
 
 
 @app.route("/kill/<int:pid>", methods=["POST"])

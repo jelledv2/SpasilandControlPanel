@@ -19,6 +19,9 @@
         <button class="sidebar-btn" type="button" onclick="navigateTo('audio', this)">
           <i class="fa fa-volume-up"></i>
         </button>
+        <button class="sidebar-btn" type="button" onclick="navigateTo('lights', this)">
+          <i class="fa fa-lightbulb-o"></i>
+        </button>
         <button class="sidebar-btn" type="button" onclick="navigateTo('stats', this)">
           <i class="fa fa-tachometer"></i>
         </button>
@@ -248,6 +251,19 @@
       </div>
     </div>
 
+    <div id="screen-lights" class="screen">
+      <div class="main-container">
+        <div class="section">
+          <button class="start" id="disco-on-btn" type="button" onclick="discoOn()" {% if disco_on %}style="display:none"{% endif %}>
+            <i class="fa fa-lightbulb-o start-icon"></i><span>Disco Light</span>
+          </button>
+          <button class="stop" id="disco-off-btn" type="button" onclick="discoOff()" {% if not disco_on %}style="display:none"{% endif %}>
+            Stop Disco Light
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- {% set name = 'command' %}
     <div class="command-container">
       <form action="{{ url_for('do_action', action_name=name) }}" method="post">
@@ -453,6 +469,28 @@
         fetch('/audio/surround/stop', { method: 'POST' })
           .then(r => r.json())
           .then(d => { if (d.success) document.getElementById('surround-stop-btn').style.display = 'none'; });
+      }
+
+      function discoOn() {
+        fetch('/lights/disco/on', { method: 'POST' })
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              document.getElementById('disco-on-btn').style.display = 'none';
+              document.getElementById('disco-off-btn').style.display = '';
+            }
+          });
+      }
+
+      function discoOff() {
+        fetch('/lights/disco/off', { method: 'POST' })
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              document.getElementById('disco-off-btn').style.display = 'none';
+              document.getElementById('disco-on-btn').style.display = '';
+            }
+          });
       }
 
       function toggleSidebar() {
