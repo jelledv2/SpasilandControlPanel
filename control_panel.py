@@ -43,6 +43,11 @@ def stop_process_logic(action_name):
         running_processes.pop(action_name, None)
         return True
 
+    if action_name == "stremio":
+        subprocess.run(["pkill", "stremio"])
+        running_processes.pop(action_name, None)
+        return True
+
     if action_name in CHROMIUM_PROFILE_DIRS:
         profile_dir = CHROMIUM_PROFILE_DIRS[action_name]
         subprocess.run(["pkill", "-f", profile_dir])
@@ -140,6 +145,7 @@ def do_action(action_name):
         env["QT_SCALE_FACTOR"] = "1.7"
         proc = subprocess.Popen(["stremio"], env=env)
         running_processes[action_name] = proc
+        subprocess.Popen(["bash", "-c", "sleep 2 && wtype -k F11"])
         output = f"Gestart: stremio (PID {proc.pid})"
     elif action_name == "command":
         user_input = request.form.get("user_command", "").strip()
