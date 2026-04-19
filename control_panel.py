@@ -135,7 +135,12 @@ def do_action(action_name):
             "https://www.play.tv"
             ])
     elif action_name == "stremio":
-        output = run_command(action_name, ["stremio"])
+        env = os.environ.copy()
+        env["DISPLAY"] = ":0"
+        env["QT_SCALE_FACTOR"] = "1.7"
+        proc = subprocess.Popen(["stremio"], env=env)
+        running_processes[action_name] = proc
+        output = f"Gestart: stremio (PID {proc.pid})"
     elif action_name == "command":
         user_input = request.form.get("user_command", "").strip()
         if not user_input:
