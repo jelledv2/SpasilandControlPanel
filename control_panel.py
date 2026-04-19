@@ -134,6 +134,8 @@ def do_action(action_name):
             "--user-data-dir=/home/jelle/.config/chromium-play",
             "https://www.play.tv"
             ])
+    elif action_name == "stremio":
+        output = run_command(action_name, ["stremio"])
     elif action_name == "command":
         user_input = request.form.get("user_command", "").strip()
         if not user_input:

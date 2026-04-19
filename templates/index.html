@@ -120,6 +120,17 @@
           </form>
           {% endif %}
         </div>
+        <div class="section">
+          {% set name = 'stremio' %}
+          <form action="{{ url_for('do_action', action_name=name) }}" method="post">
+            <button class="start" type="submit"><i class="fa fa-play-circle start-icon"></i><span>Start Stremio</span></button>
+          </form>
+          {% if name in active %}
+          <form action="{{ url_for('stop_process', action_name=name) }}" method="post">
+            <button class="stop" type="submit">Stop Stremio</button>
+          </form>
+          {% endif %}
+        </div>
       </div>
     </div>
 
