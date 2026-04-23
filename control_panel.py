@@ -33,7 +33,6 @@ CHROMIUM_PROFILE_DIRS = {
     "netflix":  "/home/jelle/.config/chromium-netflix",
     "spotify":  "/home/jelle/.config/chromium-spotify",
     "vrtmax":   "/home/jelle/.config/chromium-vrtmax",
-    "play":     "/home/jelle/.config/chromium-play",
     "link":     "/home/jelle/.config/chromium-link",
     "command":  "/home/jelle/.config/chromium-command",
 }
@@ -133,12 +132,8 @@ def do_action(action_name):
             ])
     elif action_name == "play":
         output = run_command(action_name, [
-            "chromium",
-            "--enable-widevine",
-            "--new-window",
+            "firefox",
             "--kiosk",
-            "--user-data-dir=/home/jelle/.config/chromium-play",
-            '--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             "https://www.play.tv"
             ])
     elif action_name == "stremio":
