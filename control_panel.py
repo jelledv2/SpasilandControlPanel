@@ -138,6 +138,7 @@ def do_action(action_name):
             "--new-window",
             "--kiosk",
             "--user-data-dir=/home/jelle/.config/chromium-play",
+            '--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             "https://www.play.tv"
             ])
     elif action_name == "stremio":
