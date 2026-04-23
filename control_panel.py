@@ -3,6 +3,7 @@ import subprocess
 import os
 import time
 import re
+import urllib.request
 
 app = Flask(__name__)
 
@@ -336,6 +337,46 @@ def toggle_mute():
         return jsonify(success=True, muted=muted)
     except Exception as e:
         return jsonify(success=False, error=str(e)), 500
+
+
+ALBUM_URL = "https://photos.app.goo.gl/ByM1EwZvVdGqt2ESA"
+_photo_cache = {"photos": [], "timestamp": 0}
+PHOTO_CACHE_TTL = 300
+
+
+def fetch_album_photos():
+    now = time.time()
+    if _photo_cache["photos"] and now - _photo_cache["timestamp"] < PHOTO_CACHE_TTL:
+        return _photo_cache["photos"]
+
+    req = urllib.request.Request(
+        ALBUM_URL,
+        headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    )
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        html = resp.read().decode("utf-8", errors="replace")
+
+    raw = re.findall(r'https://lh3\.googleusercontent\.com/[^\s"\'\\,\]\[>]+', html)
+    seen = set()
+    photos = []
+    for url in raw:
+        base = re.sub(r'=[\w\-]+$', '', url)
+        if base not in seen and "/pw/" in base and len(base) > 50:
+            seen.add(base)
+            photos.append(base + "=w1920-h1080")
+
+    _photo_cache["photos"] = photos
+    _photo_cache["timestamp"] = now
+    return photos
+
+
+@app.route("/photos/album")
+def get_album_photos():
+    try:
+        photos = fetch_album_photos()
+        return jsonify(photos=photos)
+    except Exception as e:
+        return jsonify(photos=[], error=str(e)), 500
 
 
 if __name__ == "__main__":

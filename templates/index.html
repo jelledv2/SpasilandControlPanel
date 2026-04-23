@@ -16,6 +16,9 @@
         <button class="sidebar-btn" type="button" onclick="navigateTo('search', this)">
           <i class="fa fa-search"></i>
         </button>
+        <!-- <button class="sidebar-btn" type="button" onclick="navigateTo('photos', this)">
+          <i class="fa fa-heart"></i>
+        </button> -->
         <button class="sidebar-btn" type="button" onclick="navigateTo('audio', this)">
           <i class="fa fa-volume-up"></i>
         </button>
@@ -275,6 +278,25 @@
       </div>
     </div>
 
+    <div id="screen-photos" class="screen">
+      <div class="photos-screen">
+        <div id="photos-loading" class="photos-status">
+          <i class="fa fa-spinner fa-spin"></i> Foto's laden...
+        </div>
+        <div id="photos-error" class="photos-status" style="display:none">
+          <i class="fa fa-exclamation-circle"></i> Kon foto's niet laden.
+        </div>
+        <div id="photos-slide" style="display:none;width:100%;height:100%;position:relative;">
+          <img id="photos-img" class="photos-img" src="" alt="">
+          <div class="photos-controls">
+            <button class="photos-btn" type="button" onclick="prevSlide()"><i class="fa fa-chevron-left"></i></button>
+            <button class="photos-btn" type="button" id="photos-pause-btn" onclick="toggleSlideshowPause()"><i class="fa fa-pause"></i></button>
+            <button class="photos-btn" type="button" onclick="nextSlide()"><i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- {% set name = 'command' %}
     <div class="command-container">
       <form action="{{ url_for('do_action', action_name=name) }}" method="post">
@@ -397,6 +419,9 @@
 
         clearInterval(statsInterval);
         clearInterval(processInterval);
+        clearInterval(slideshowInterval);
+        slideshowInterval = null;
+
         if (screen === 'stats') {
           fetchStats();
           fetchProcesses();
@@ -405,6 +430,9 @@
         }
         if (screen === 'audio') {
           fetchAudio();
+        }
+        if (screen === 'photos') {
+          initPhotos();
         }
       }
 
@@ -492,6 +520,77 @@
               btn.classList.toggle('on', d.disco_on);
             }
           });
+      }
+
+      let photoList = [];
+      let photoIndex = 0;
+      let slideshowInterval = null;
+      let slideshowPaused = false;
+
+      function initPhotos() {
+        if (photoList.length > 0) {
+          showSlide(photoIndex);
+          startSlideshow();
+          return;
+        }
+        const loading = document.getElementById('photos-loading');
+        const error   = document.getElementById('photos-error');
+        const slide   = document.getElementById('photos-slide');
+        loading.style.display = '';
+        error.style.display   = 'none';
+        slide.style.display   = 'none';
+
+        fetch('/photos/album')
+          .then(r => r.json())
+          .then(d => {
+            loading.style.display = 'none';
+            if (!d.photos || d.photos.length === 0) {
+              error.style.display = '';
+              return;
+            }
+            photoList = d.photos.sort(() => Math.random() - 0.5);
+            photoIndex = 0;
+            slide.style.display = 'flex';
+            showSlide(0);
+            startSlideshow();
+          })
+          .catch(() => {
+            loading.style.display = 'none';
+            error.style.display = '';
+          });
+      }
+
+      function showSlide(idx) {
+        const img = document.getElementById('photos-img');
+        img.style.opacity = '0';
+        img.onload = () => { img.style.opacity = '1'; };
+        img.onerror = () => { nextSlide(); };
+        img.src = photoList[idx];
+      }
+
+      function nextSlide() {
+        if (!photoList.length) return;
+        photoIndex = (photoIndex + 1) % photoList.length;
+        showSlide(photoIndex);
+      }
+
+      function prevSlide() {
+        if (!photoList.length) return;
+        photoIndex = (photoIndex - 1 + photoList.length) % photoList.length;
+        showSlide(photoIndex);
+      }
+
+      function startSlideshow() {
+        clearInterval(slideshowInterval);
+        slideshowInterval = setInterval(() => {
+          if (!slideshowPaused) nextSlide();
+        }, 15000);
+      }
+
+      function toggleSlideshowPause() {
+        slideshowPaused = !slideshowPaused;
+        const btn = document.getElementById('photos-pause-btn');
+        btn.innerHTML = slideshowPaused ? '<i class="fa fa-play"></i>' : '<i class="fa fa-pause"></i>';
       }
 
       function toggleSidebar() {

@@ -1372,3 +1372,76 @@ button.stop:hover {
     }
 
 }
+
+/* ── Photos slideshow ───────────────────────────────────────────── */
+
+.photos-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.photos-status {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#photos-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.photos-img {
+    max-width: 85%;
+    max-height: calc(100vh - 230px);
+    width: auto;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+}
+
+.photos-controls {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 40px;
+    padding: 10px 22px;
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+.photos-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1;
+}
+
+.photos-btn:hover {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+}
+
